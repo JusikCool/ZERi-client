@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import type { TodayRisk } from "../../types/stock";
 import StockIdentity from "../stock/StockIdentity";
 import Button from "../ui/Button";
@@ -8,6 +9,7 @@ type TodayRiskCardProps = {
 };
 
 function TodayRiskCard({ risk }: TodayRiskCardProps) {
+  const navigate = useNavigate();
   const subtitle =
     risk.stock.price !== undefined && risk.stock.changeRate !== undefined
       ? `$${risk.stock.price.toFixed(2)} · 어제 대비 +${risk.stock.changeRate}%`
@@ -38,8 +40,15 @@ function TodayRiskCard({ risk }: TodayRiskCardProps) {
         </p>
       </div>
       <div className="grid grid-cols-2 gap-2.5">
-        <Button variant="secondary">왜 위험한가요?</Button>
-        <Button>자세히 보기</Button>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            // TODO: connect to /stocks/PLTR/why after the why page is implemented.
+          }}
+        >
+          왜 위험한가요?
+        </Button>
+        <Button onClick={() => navigate("/stocks/PLTR")}>자세히 보기</Button>
       </div>
     </Card>
   );
