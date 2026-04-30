@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import DownsideRangeCard from "../../components/stock/DownsideRangeCard";
 import ReasonLinkCard from "../../components/stock/ReasonLinkCard";
@@ -12,19 +11,25 @@ function StockDetailPage() {
   const navigate = useNavigate();
   const { symbol } = useParams<{ symbol: string }>();
 
-  const detailData = useMemo(() => {
-    const normalizedSymbol = symbol?.toUpperCase() ?? "PLTR";
-    return mockStockDetailData[normalizedSymbol] ?? mockStockDetailData.PLTR;
-  }, [symbol]);
+  const normalizedSymbol = symbol?.toUpperCase() ?? "PLTR";
+  const detailData =
+    mockStockDetailData[normalizedSymbol] ?? mockStockDetailData.PLTR;
 
   return (
-    <div className="min-h-dvh bg-[#f2f4f6] px-4 pb-6 pt-6 text-slate-900 sm:py-8">
-      <div className="mx-auto flex min-h-[calc(100dvh-3rem)] w-full max-w-[430px] flex-col bg-[#f2f4f6]">
+    <div className="min-h-dvh bg-[#f2f4f6] px-4 pb-8 pt-5 text-slate-900 sm:py-8">
+      <div className="mx-auto flex min-h-[calc(100dvh-2.5rem)] w-full max-w-[430px] flex-col bg-[#f2f4f6]">
         <StockDetailHeader
           title={detailData.stock.displayTitle}
-          onBack={() => navigate(-1)}
+          onBack={() => {
+            if (window.history.length > 1) {
+              navigate(-1);
+              return;
+            }
+
+            navigate("/");
+          }}
         />
-        <main className="space-y-3 pb-6 pt-5">
+        <main className="space-y-3 px-0.5 pb-6 pt-5">
           <RiskSummaryCard summary={detailData.riskSummary} />
           <RecommendationBanner
             label={detailData.recommendation.label}
