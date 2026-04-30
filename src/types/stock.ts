@@ -27,3 +27,46 @@ export type HomeData = {
   todayRisk: TodayRisk;
   watchlist: StockRiskItem[];
 };
+
+export type RiskMetric = {
+  id: string;
+  label: string;
+  value: string;
+  helperText?: string;
+  emphasis?: "danger" | "warning" | "neutral";
+};
+
+export type DownsideRange = {
+  minPercent: number;
+  midLabel: string;
+  maxPercent: number;
+  currentPercent: number;
+  leftProbabilityLabel: string;
+  rightProbabilityLabel: string;
+};
+
+export type StockDetailData = {
+  stock: {
+    symbol: string;
+    name: string;
+    displayTitle: string;
+  };
+  riskSummary: {
+    label: string;
+    warningText: string;
+    horizonLabel: string;
+    downsidePercent: number;
+    description: string;
+  };
+  recommendation: {
+    label: string;
+    title: string;
+  };
+  metrics: RiskMetric[];
+  downsideRange: DownsideRange;
+  reasonLink: {
+    title: string;
+    description: string;
+    href: string;
+  };
+};
