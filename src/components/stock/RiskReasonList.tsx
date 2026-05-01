@@ -7,7 +7,7 @@ type RiskReasonListProps = {
 
 function RiskReasonList({ reasons }: RiskReasonListProps) {
   return (
-    <section className="space-y-3">
+    <section className="space-y-2.5">
       {reasons.map((reason) => (
         <RiskReasonItem
           key={reason.id}

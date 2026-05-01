@@ -7,39 +7,43 @@ export const mockRiskReasonData: Record<string, RiskReasonData> = {
       name: "Palantir",
       displayTitle: "PLTR Palantir",
     },
-    pageTitle: "왜 위험한가요?",
+    pageTitle: "\uC65C \uC704\uD5D8\uD55C\uAC00\uC694?",
     summary: {
-      prefix: "PLTR에서 4가지 요인이 동시에",
-      highlight: "빨간불",
-      suffix: "을 켰어요",
+      prefix: "PLTR\uC5D0\uC11C 4\uAC00\uC9C0 \uC694\uC778\uC774",
+      highlight: "\uBE68\uAC04\uBD88",
+      suffix: "\uC744 \uCF30\uC5B4\uC694",
     },
     reasons: [
       {
         id: "volatility-spike",
         order: 1,
-        title: "변동성 확대",
-        description: "최근 10일 변동성이 평소 대비 2.3배 높아짐",
+        title: "\uBCC0\uB3D9\uC131 \uD655\uB300",
+        description:
+          "\uCD5C\uADFC 10\uC77C \uBCC0\uB3D9\uC131\uC774 \uD3C9\uC18C \uB300\uBE44 2.3\uBC30 \uB192\uC544\uC9D0",
         severity: "danger",
       },
       {
         id: "earnings-soon",
         order: 2,
-        title: "실적 임박",
-        description: "5월 4일 1Q 실적 발표 - 기대 이상 변동 가능성",
+        title: "\uC2E4\uC801 \uC784\uBC15",
+        description:
+          "5\uC6D4 4\uC77C 1Q \uC2E4\uC801 \uBC1C\uD45C - \uAE30\uB300 \uC774\uC0C1 \uBCC0\uB3D9 \uAC00\uB2A5\uC131",
         severity: "warning",
       },
       {
         id: "similar-signals",
         order: 3,
-        title: "비슷한 신호 4건",
-        description: "2024-06 SOXL · 2024-11 TQQQ · 2025-04 SMCI · 2025-08 ARM",
+        title: "\uBE44\uC2B7\uD55C \uC2E0\uD638 4\uAC74",
+        description:
+          "2024-06 SOXL \u00B7 2024-11 TQQQ \u00B7 2025-04 SMCI \u00B7 2025-08 ARM",
         severity: "danger",
       },
       {
         id: "vix-up",
         order: 4,
-        title: "VIX 상승",
-        description: "시장 전체 변동성 28.4 (평소 17-20)",
+        title: "VIX \uC0C1\uC2B9",
+        description:
+          "\uC2DC\uC7A5 \uC804\uCCB4 \uBCC0\uB3D9\uC131 28.4 (\uD3C9\uC18C 17-20)",
         severity: "warning",
       },
     ],

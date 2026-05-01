@@ -10,11 +10,12 @@ function RiskReasonSummary({
   suffix,
 }: RiskReasonSummaryProps) {
   return (
-    <section className="space-y-1 px-0.5">
-      <h1 className="text-[1.9rem] font-bold leading-[1.25] tracking-[-0.04em] text-slate-900">
+    <section className="px-0.5 pt-1.5">
+      <h1 className="max-w-[17ch] text-[1.38rem] font-bold leading-[1.32] tracking-[-0.02em] text-slate-900 sm:text-[1.45rem]">
         {prefix}
         <br />
-        <span className="text-rose-500">{highlight}</span>
+        {"\uB3D9\uC2DC\uC5D0 "}
+        <span className="font-bold text-rose-500">{highlight}</span>
         {suffix}
       </h1>
     </section>

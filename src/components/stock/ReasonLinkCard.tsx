@@ -31,7 +31,7 @@ function ReasonLinkCard({ title, description, href }: ReasonLinkCardProps) {
           </div>
           <span
             aria-hidden="true"
-            className="text-lg font-semibold text-blue-500"
+            className="text-lg font-semibold leading-none text-blue-500"
           >
             →
           </span>
