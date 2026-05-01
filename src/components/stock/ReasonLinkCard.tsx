@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Card from "../ui/Card";
 
 type ReasonLinkCardProps = {
@@ -6,11 +7,18 @@ type ReasonLinkCardProps = {
   href?: string;
 };
 
-function ReasonLinkCard({ title, description }: ReasonLinkCardProps) {
+function ReasonLinkCard({ title, description, href }: ReasonLinkCardProps) {
+  const navigate = useNavigate();
+
   return (
     <button
       type="button"
       aria-label={title}
+      onClick={() => {
+        if (href) {
+          navigate(href);
+        }
+      }}
       className="block w-full cursor-pointer text-left transition-transform active:scale-[0.995] focus-visible:outline-none"
     >
       <Card className="rounded-[18px] p-4 transition-colors hover:bg-slate-50/80 focus-within:ring-2 focus-within:ring-blue-500/20">
