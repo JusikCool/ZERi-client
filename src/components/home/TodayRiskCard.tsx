@@ -42,9 +42,7 @@ function TodayRiskCard({ risk }: TodayRiskCardProps) {
       <div className="grid grid-cols-2 gap-2.5">
         <Button
           variant="secondary"
-          onClick={() => {
-            // TODO: connect to /stocks/PLTR/why after the why page is implemented.
-          }}
+          onClick={() => navigate(`/stocks/${risk.stock.symbol}/why`)}
         >
           왜 위험한가요?
         </Button>

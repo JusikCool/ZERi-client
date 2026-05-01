@@ -7,6 +7,10 @@ const colorMap: Record<string, string> = {
   TSLA: "bg-orange-100 text-orange-600",
   NVDA: "bg-amber-100 text-amber-700",
   AAPL: "bg-emerald-100 text-emerald-700",
+  SOXL: "bg-rose-100 text-rose-600",
+  TQQQ: "bg-sky-100 text-sky-700",
+  SMCI: "bg-orange-100 text-orange-700",
+  ARM: "bg-amber-100 text-amber-700",
 };
 
 function StockAvatar({ symbol }: StockAvatarProps) {
