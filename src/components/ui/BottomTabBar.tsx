@@ -44,7 +44,7 @@ function BottomTabBar({
   return (
     <nav
       aria-label="\uD558\uB2E8 \uD0ED \uBC14"
-      className="sticky bottom-0 mt-auto border-t border-slate-200/80 bg-white/95 px-3 pb-[calc(env(safe-area-inset-bottom)+10px)] pt-2 backdrop-blur"
+      className="fixed bottom-0 left-1/2 z-50 w-full max-w-[430px] -translate-x-1/2 border-t border-slate-200/60 bg-white px-3 pb-[calc(env(safe-area-inset-bottom)+8px)] pt-2"
     >
       <ul className="grid grid-cols-4 gap-1">
         {items.map((item) => {
