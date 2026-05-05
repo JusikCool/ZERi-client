@@ -16,10 +16,10 @@ type BottomTabBarProps = {
 };
 
 const defaultItems: TabItem[] = [
-  { key: "home", label: "홈", href: "/" },
-  { key: "search", label: "탐색" },
-  { key: "watchlist", label: "관심" },
-  { key: "my", label: "마이", href: "/my" },
+  { key: "home", label: "\uD648", href: "/" },
+  { key: "search", label: "\uAC80\uC0C9" },
+  { key: "watchlist", label: "\uAD00\uC2EC" },
+  { key: "my", label: "\uB098", href: "/my" },
 ];
 
 const tabIconMap: Record<LegacyTabKey, string> = {
@@ -43,7 +43,7 @@ function BottomTabBar({
 
   return (
     <nav
-      aria-label="하단 탭 바"
+      aria-label="\uD558\uB2E8 \uD0ED \uBC14"
       className="sticky bottom-0 mt-auto border-t border-slate-200/80 bg-white/95 px-3 pb-[calc(env(safe-area-inset-bottom)+10px)] pt-2 backdrop-blur"
     >
       <ul className="grid grid-cols-4 gap-1">
@@ -62,7 +62,7 @@ function BottomTabBar({
                     navigate(item.href);
                   }
                 }}
-                className={`flex w-full cursor-pointer flex-col items-center gap-1 px-2 py-2.5 text-[11px] font-medium ${
+                className={`flex w-full cursor-pointer flex-col items-center gap-1 rounded-[14px] px-2 py-2.5 text-[11px] font-medium transition-colors active:bg-slate-50 ${
                   isActive ? "text-blue-500" : "text-slate-400"
                 }`}
               >

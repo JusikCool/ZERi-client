@@ -29,7 +29,7 @@ function HomePage() {
           <TodayRiskSection risk={mockHomeData.todayRisk} />
           <WatchlistSection items={mockHomeData.watchlist} />
         </main>
-        <BottomTabBar />
+        <BottomTabBar activeTab="home" />
       </div>
     </div>
   );
