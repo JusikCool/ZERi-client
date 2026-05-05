@@ -1,31 +1,35 @@
 import Card from "../ui/Card";
 
 type UserSummaryCardProps = {
-  userName: string;
-  title: string;
+  label: string;
+  subtitle: string;
   highlightedValue: string;
   description: string;
 };
 
 function UserSummaryCard({
-  userName,
-  title,
+  label,
+  subtitle,
   highlightedValue,
   description,
 }: UserSummaryCardProps) {
   return (
-    <Card className="overflow-hidden rounded-[24px] bg-blue-500 p-5 text-white">
-      <div className="space-y-3">
-        <p className="text-xs font-semibold text-blue-100">{userName}님의 BEFORE 효과</p>
+    <Card className="overflow-hidden rounded-[22px] border-transparent bg-linear-to-br from-blue-500 to-blue-600 px-5 py-4.5 text-white shadow-[0_10px_24px_rgba(37,99,235,0.16)]">
+      <div className="space-y-2.5">
+        <p className="text-[11px] font-semibold tracking-[-0.01em] text-blue-100/95">
+          {label}
+        </p>
         <div className="space-y-1.5">
-          <p className="max-w-[18rem] text-base font-semibold leading-6 tracking-[-0.02em] text-white">
-            {title}
+          <p className="text-[13px] font-medium leading-none text-blue-50/90">
+            {subtitle}
           </p>
-          <p className="text-[3rem] font-bold leading-none tracking-[-0.05em] [font-variant-numeric:tabular-nums]">
+          <p className="text-[3rem] font-bold leading-none tracking-normal [font-variant-numeric:tabular-nums]">
             {highlightedValue}
           </p>
         </div>
-        <p className="text-sm leading-5 text-blue-50/90">{description}</p>
+        <p className="max-w-[16rem] text-[12px] leading-[1.45] text-blue-50/88">
+          {description}
+        </p>
       </div>
     </Card>
   );

@@ -5,10 +5,10 @@ export const mockMyData: MyData = {
     name: "유진",
   },
   summary: {
-    title: "유진님, 매수 전 재검토로 손실을 줄였어요",
+    label: "이번 달 BEFORE 효과",
+    subtitle: "매수하려던 수량을",
     highlightedValue: "-32%",
-    description:
-      "최근 30일 동안 위험 신호가 켜진 종목을 다시 검토한 결과예요.",
+    description: "줄였어요. 그중 8건은 실제로 더 떨어졌어요.",
   },
   stats: [
     {
@@ -34,10 +34,11 @@ export const mockMyData: MyData = {
     },
   ],
   modelStatus: {
-    title: "모델 상태",
+    title: "모델 정상성 리포트",
     statusLabel: "정상",
     status: "normal",
     description: "최근 업데이트 기준 정상 작동 중이에요.",
+    metricsText: "Q05 커버률 5.2% · 목표 5.0% · Kupiec p 0.74",
   },
   menuItems: [
     {

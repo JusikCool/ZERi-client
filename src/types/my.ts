@@ -19,6 +19,7 @@ export type ModelStatus = {
   statusLabel: string;
   status: ModelStatusState;
   description: string;
+  metricsText?: string;
 };
 
 export type MyMenuItemData = {
@@ -34,7 +35,8 @@ export type MyData = {
     name: string;
   };
   summary: {
-    title: string;
+    label: string;
+    subtitle: string;
     highlightedValue: string;
     description: string;
   };
