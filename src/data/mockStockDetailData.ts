@@ -105,10 +105,8 @@ export const mockStockDetailData: Record<string, StockDetailData> = {
     riskSummary: {
       label: "위험 신호",
       grade: "WARNING",
-      horizonLabel: "30일 안 최악으로 가면",
+
       downsidePercent: -22,
-      description:
-        "평소 5% 확률 시나리오에서 도달 가능한 최저점이에요. 100번 중 5번은 이보다 더 떨어질 수 있어요.",
     },
     recommendation: {
       label: "제안",

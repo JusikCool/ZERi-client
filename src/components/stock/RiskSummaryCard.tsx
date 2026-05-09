@@ -29,22 +29,11 @@ const gradeStyles: Record<
 function RiskSummaryCard({ summary }: RiskSummaryCardProps) {
   const styles = gradeStyles[summary.grade];
 
-  const descriptionLines = summary.description
-    .split(". ")
-    .map((line) => line.trim())
-    .filter(Boolean);
-
   return (
     <Card className="space-y-5 rounded-3xl p-5 sm:p-6">
-      <div className={`flex items-center gap-1.5 text-xs font-semibold ${styles.label}`}>
-        <span className={`h-2 w-2 rounded-full ${styles.dot}`} />
-        <span>{summary.label}</span>
-        <span>·</span>
-        <span>{summary.grade}</span>
-      </div>
       <div className="space-y-2.5">
         <p className="text-sm font-medium text-slate-500">
-          {summary.horizonLabel}
+          미래 30일 최악의 경우 예측 수익률
         </p>
         <p
           className={`text-[3.95rem] font-extrabold leading-none tracking-[-0.03em] [font-variant-numeric:tabular-nums] ${styles.value}`}
@@ -52,16 +41,9 @@ function RiskSummaryCard({ summary }: RiskSummaryCardProps) {
           {summary.downsidePercent}%
         </p>
       </div>
-      <div className="space-y-1 text-[15px] leading-6 text-slate-500">
-        {descriptionLines.map((line, index) => (
-          <p key={`${line}-${index}`}>
-            {line}
-            {index === descriptionLines.length - 1 || line.endsWith(".")
-              ? ""
-              : "."}
-          </p>
-        ))}
-      </div>
+      <p className="text-[13px] leading-6 text-slate-500">
+        투자 판단과 손실은 투자자 본인에게 귀속됩니다.
+      </p>
     </Card>
   );
 }
