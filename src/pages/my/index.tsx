@@ -1,9 +1,14 @@
-import DashboardStatsSection from "../../components/my/DashboardStatsSection";
+import { motion } from "framer-motion";
+import LogoutButton from "../../components/my/LogoutButton";
 import ModelStatusCard from "../../components/my/ModelStatusCard";
 import MyHeader from "../../components/my/MyHeader";
 import MyMenuSection from "../../components/my/MyMenuSection";
-import UserSummaryCard from "../../components/my/UserSummaryCard";
 import { mockMyData } from "../../data/mockMyData";
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
+};
 
 function MyPage() {
   const viewModel = {
@@ -16,22 +21,29 @@ function MyPage() {
 
   return (
     <div className="mx-auto min-h-dvh w-full max-w-107.5 bg-[#f2f4f6] px-4 pt-6 text-slate-900 sm:py-8">
-      <MyHeader title={`${viewModel.userName}님`} />
-      <main className="space-y-3 pb-28">
-        <UserSummaryCard
-          label={viewModel.summary.label}
-          subtitle={viewModel.summary.subtitle}
-          highlightedValue={viewModel.summary.highlightedValue}
-          description={viewModel.summary.description}
-        />
-        <DashboardStatsSection stats={viewModel.stats} />
-        <div className="pt-1">
+      <motion.div
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
+      >
+        <MyHeader title={`${viewModel.userName}님`} />
+      </motion.div>
+      <motion.main
+        className="space-y-3 pb-28"
+        initial="hidden"
+        animate="visible"
+        variants={{ visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } } }}
+      >
+        <motion.div variants={itemVariants} className="pt-1">
           <ModelStatusCard status={viewModel.modelStatus} />
-        </div>
-        <div className="pt-1">
+        </motion.div>
+        <motion.div variants={itemVariants} className="pt-1">
           <MyMenuSection items={viewModel.menuItems} />
-        </div>
-      </main>
+        </motion.div>
+        <motion.div variants={itemVariants}>
+          <LogoutButton />
+        </motion.div>
+      </motion.main>
     </div>
   );
 }
