@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import LogoutButton from "../../components/my/LogoutButton";
 import ModelStatusCard from "../../components/my/ModelStatusCard";
 import MyHeader from "../../components/my/MyHeader";
 import MyMenuSection from "../../components/my/MyMenuSection";
@@ -38,6 +39,9 @@ function MyPage() {
         </motion.div>
         <motion.div variants={itemVariants} className="pt-1">
           <MyMenuSection items={viewModel.menuItems} />
+        </motion.div>
+        <motion.div variants={itemVariants}>
+          <LogoutButton />
         </motion.div>
       </motion.main>
     </div>
