@@ -2,8 +2,6 @@ import { motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
 import FanChart from "../../components/stock/FanChart";
 import ReasonLinkCard from "../../components/stock/ReasonLinkCard";
-import RecommendationBanner from "../../components/stock/RecommendationBanner";
-import RiskMetricGrid from "../../components/stock/RiskMetricGrid";
 import RiskSummaryCard from "../../components/stock/RiskSummaryCard";
 import StockDetailHeader from "../../components/stock/StockDetailHeader";
 import { mockStockDetailData } from "../../data/mockStockDetailData";
