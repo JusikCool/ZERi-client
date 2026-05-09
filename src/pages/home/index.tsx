@@ -1,5 +1,4 @@
 import HomeGreetingSection from "../../components/home/HomeGreetingSection";
-import SearchBar from "../../components/home/SearchBar";
 import TodayRiskSection from "../../components/home/TodayRiskSection";
 import WatchlistSection from "../../components/home/WatchlistSection";
 import BottomTabBar from "../../components/ui/BottomTabBar";
@@ -22,9 +21,7 @@ function HomePage() {
           {avatarChar}
         </button>
       </header>
-      <div className="px-1 pb-5">
-        <SearchBar />
-      </div>
+
       <main className="space-y-5 pb-28">
         <HomeGreetingSection />
         <TodayRiskSection risk={mockHomeData.todayRisk} />
