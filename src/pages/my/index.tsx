@@ -3,7 +3,6 @@ import ModelStatusCard from "../../components/my/ModelStatusCard";
 import MyHeader from "../../components/my/MyHeader";
 import MyMenuSection from "../../components/my/MyMenuSection";
 import UserSummaryCard from "../../components/my/UserSummaryCard";
-import BottomTabBar from "../../components/ui/BottomTabBar";
 import { mockMyData } from "../../data/mockMyData";
 
 function MyPage() {
@@ -16,9 +15,9 @@ function MyPage() {
   };
 
   return (
-    <div className="mx-auto min-h-dvh w-full max-w-[430px] bg-[#f2f4f6] px-4 pt-6 text-slate-900 sm:py-8">
+    <div className="mx-auto min-h-dvh w-full max-w-107.5 bg-[#f2f4f6] px-4 pt-6 text-slate-900 sm:py-8">
       <MyHeader title={`${viewModel.userName}님`} />
-      <main className="space-y-3 pb-[112px]">
+      <main className="space-y-3 pb-28">
         <UserSummaryCard
           label={viewModel.summary.label}
           subtitle={viewModel.summary.subtitle}
@@ -33,7 +32,6 @@ function MyPage() {
           <MyMenuSection items={viewModel.menuItems} />
         </div>
       </main>
-      <BottomTabBar activeTab="my" />
     </div>
   );
 }

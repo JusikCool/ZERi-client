@@ -13,39 +13,19 @@ function StockWhyPage() {
   const pageData =
     mockRiskReasonData[normalizedSymbol] ?? mockRiskReasonData.PLTR;
 
-  const viewModel = {
-    title: pageData.pageTitle,
-    summary: pageData.summary,
-    reasons: pageData.reasons,
-    similarCasesTitle: `비슷했던 과거 ${pageData.similarCases.length}건`,
-    similarCases: pageData.similarCases,
-    fallbackDetailPath: `/stocks/${pageData.stock.symbol}`,
-  };
-
   return (
-    <div className="mx-auto min-h-dvh w-full max-w-[430px] bg-[#f2f4f6] px-4 pb-8 pt-5 text-slate-900 sm:py-8">
+    <div className="mx-auto min-h-dvh w-full max-w-107.5 bg-[#f2f4f6] px-4 pb-28 pt-5 text-slate-900">
       <StockDetailHeader
-        title={viewModel.title}
+        title={pageData.pageTitle}
         backAriaLabel={`${pageData.stock.symbol} 상세로 돌아가기`}
-        onBack={() => {
-          if (window.history.length > 1) {
-            navigate(-1);
-            return;
-          }
-
-          navigate(viewModel.fallbackDetailPath);
-        }}
+        onBack={() => navigate(-1)}
       />
-      <main className="space-y-5 px-0.5 pb-7 pt-4">
-        <RiskReasonSummary
-          prefix={viewModel.summary.prefix}
-          highlight={viewModel.summary.highlight}
-          suffix={viewModel.summary.suffix}
-        />
-        <RiskReasonList reasons={viewModel.reasons} />
+      <main className="space-y-4 px-0.5 pb-7 pt-4">
+        <RiskReasonSummary segments={pageData.summary} />
+        <RiskReasonList reasons={pageData.reasons} />
         <SimilarCasesSection
-          title={viewModel.similarCasesTitle}
-          items={viewModel.similarCases}
+          title={`비슷했던 과거 ${pageData.similarCases.length}건`}
+          items={pageData.similarCases}
         />
       </main>
     </div>

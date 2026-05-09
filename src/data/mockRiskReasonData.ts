@@ -7,44 +7,46 @@ export const mockRiskReasonData: Record<string, RiskReasonData> = {
       name: "Palantir",
       displayTitle: "PLTR Palantir",
     },
-    pageTitle: "\uC65C \uC704\uD5D8\uD55C\uAC00\uC694?",
-    summary: {
-      prefix: "PLTR\uC5D0\uC11C 4\uAC00\uC9C0 \uC694\uC778\uC774",
-      highlight: "\uBE68\uAC04\uBD88",
-      suffix: "\uC744 \uCF30\uC5B4\uC694",
-    },
+    pageTitle: "상세 분석",
+    summary: [
+      { text: "최근 30거래일 동안 " },
+      { text: "실현 변동성이 평소의 1.8배", highlight: true },
+      { text: "로 관측되었고, 14일 RSI는 78로 통계적 과열 구간에 위치합니다. 현재 VIX " },
+      { text: "24.3", highlight: true },
+      { text: " 환경에서, 모델은 본 종목의 변동성을 과거 분포 상위 5% 구간으로 분류했습니다. 이는 통계적 관측치이며, 향후 가격 방향에 대한 예측이 아닙니다." },
+    ],
     reasons: [
       {
         id: "volatility-spike",
         order: 1,
-        title: "\uBCC0\uB3D9\uC131 \uD655\uB300",
-        description:
-          "\uCD5C\uADFC 10\uC77C \uBCC0\uB3D9\uC131\uC774 \uD3C9\uC18C \uB300\uBE44 2.3\uBC30 \uB192\uC544\uC9D0",
+        title: "최근 30일 실현 변동성",
+        description: "지난 30거래일 종가 표준편차가 평소보다 1.8배 높습니다.",
         severity: "danger",
+        percent: 34,
       },
       {
-        id: "earnings-soon",
+        id: "rsi-overbought",
         order: 2,
-        title: "\uC2E4\uC801 \uC784\uBC15",
-        description:
-          "5\uC6D4 4\uC77C 1Q \uC2E4\uC801 \uBC1C\uD45C - \uAE30\uB300 \uC774\uC0C1 \uBCC0\uB3D9 \uAC00\uB2A5\uC131",
-        severity: "warning",
+        title: "단기 과열 지표 (RSI 14)",
+        description: "14일 RSI가 78 — 통계적 과열 구간(>70)에 진입했습니다.",
+        severity: "danger",
+        percent: 21,
       },
       {
         id: "similar-signals",
         order: 3,
-        title: "\uBE44\uC2B7\uD55C \uC2E0\uD638 4\uAC74",
-        description:
-          "2024-06 SOXL \u00B7 2024-11 TQQQ \u00B7 2025-04 SMCI \u00B7 2025-08 ARM",
+        title: "비슷한 신호 패턴",
+        description: "2024-06 SOXL · 2024-11 TQQQ · 2025-04 SMCI · 2025-08 ARM",
         severity: "danger",
+        percent: 28,
       },
       {
         id: "vix-up",
         order: 4,
-        title: "VIX \uC0C1\uC2B9",
-        description:
-          "\uC2DC\uC7A5 \uC804\uCCB4 \uBCC0\uB3D9\uC131 28.4 (\uD3C9\uC18C 17-20)",
+        title: "VIX 시장 변동성",
+        description: "시장 전체 변동성 28.4 (평소 17-20)",
         severity: "warning",
+        percent: 17,
       },
     ],
     similarCases: [

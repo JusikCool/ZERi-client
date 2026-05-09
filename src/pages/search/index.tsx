@@ -1,7 +1,6 @@
 import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import BottomTabBar from "../../components/ui/BottomTabBar";
 
 type StockSearchItem = {
   symbol: string;
@@ -125,8 +124,6 @@ function SearchPage() {
           )}
         </main>
       )}
-
-      <BottomTabBar activeTab="search" />
     </div>
   );
 }

@@ -67,9 +67,7 @@ export type StockDetailData = {
   riskSummary: {
     label: string;
     grade: RiskGrade;
-    horizonLabel: string;
     downsidePercent: number;
-    description: string;
   };
   recommendation: {
     label: string;
@@ -79,8 +77,6 @@ export type StockDetailData = {
   downsideRange: DownsideRange;
   fanChart: FanChartData;
   reasonLink: {
-    title: string;
-    description: string;
     href: string;
   };
 };

@@ -1,7 +1,6 @@
-import HomeGreetingSection from "../../components/home/HomeGreetingSection";
+﻿import HomeGreetingSection from "../../components/home/HomeGreetingSection";
 import TodayRiskSection from "../../components/home/TodayRiskSection";
 import WatchlistSection from "../../components/home/WatchlistSection";
-import BottomTabBar from "../../components/ui/BottomTabBar";
 import { mockHomeData } from "../../data/mockHomeData";
 
 function HomePage() {
@@ -30,9 +29,9 @@ function HomePage() {
         <TodayRiskSection risk={mockHomeData.todayRisk} />
         <WatchlistSection items={mockHomeData.watchlist} />
       </main>
-      <BottomTabBar activeTab="home" />
     </div>
   );
 }
 
 export default HomePage;
+

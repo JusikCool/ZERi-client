@@ -6,6 +6,12 @@ export type RiskReason = {
   title: string;
   description: string;
   severity: RiskReasonSeverity;
+  percent: number;
+};
+
+export type SummarySegment = {
+  text: string;
+  highlight?: boolean;
 };
 
 export type SimilarCase = {
@@ -23,11 +29,7 @@ export type RiskReasonData = {
     displayTitle: string;
   };
   pageTitle: string;
-  summary: {
-    prefix: string;
-    highlight: string;
-    suffix: string;
-  };
+  summary: SummarySegment[];
   reasons: RiskReason[];
   similarCases: SimilarCase[];
 };
