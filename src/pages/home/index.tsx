@@ -17,7 +17,7 @@ function HomePage() {
         </a>
         <button
           type="button"
-          aria-label="?꾨줈??
+          aria-label="프로필"
           className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-200 text-sm font-semibold text-slate-600"
         >
           {avatarChar}
@@ -28,7 +28,8 @@ function HomePage() {
         <HomeGreetingSection />
         <TodayRiskSection risk={mockHomeData.todayRisk} />
         <WatchlistSection items={mockHomeData.watchlist} />
-      </main>    </div>
+      </main>
+    </div>
   );
 }
 

@@ -1,4 +1,4 @@
-﻿import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,10 +10,10 @@ type StockSearchItem = {
 };
 
 const STOCK_LIST: StockSearchItem[] = [
-  { symbol: "PLTR", korName: "?붾??곗뼱", companyName: "Palantir Technologies", sector: "Technology" },
-  { symbol: "TSLA", korName: "?뚯뒳??, companyName: "Tesla, Inc.", sector: "Automotive" },
-  { symbol: "NVDA", korName: "?붾퉬?붿븘", companyName: "NVIDIA Corporation", sector: "Technology" },
-  { symbol: "AAPL", korName: "?좏뵆", companyName: "Apple Inc.", sector: "Technology" },
+  { symbol: "PLTR", korName: "팔란티어", companyName: "Palantir Technologies", sector: "Technology" },
+  { symbol: "TSLA", korName: "테슬라", companyName: "Tesla, Inc.", sector: "Automotive" },
+  { symbol: "NVDA", korName: "엔비디아", companyName: "NVIDIA Corporation", sector: "Technology" },
+  { symbol: "AAPL", korName: "애플", companyName: "Apple Inc.", sector: "Technology" },
 ];
 
 const avatarColors: Record<string, string> = {
@@ -57,7 +57,7 @@ function SearchPage() {
         <button
           type="button"
           onClick={() => navigate(-1)}
-          aria-label="?ㅻ줈"
+          aria-label="뒤로"
           className="shrink-0 text-slate-500"
         >
           <ChevronLeft size={22} strokeWidth={1.8} />
@@ -70,7 +70,7 @@ function SearchPage() {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="?곗빱 ?먮뒗 醫낅ぉ紐?寃??
+            placeholder="티커 또는 종목명 검색"
             className="flex-1 bg-transparent text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none"
           />
           {query && (
@@ -90,7 +90,7 @@ function SearchPage() {
 
       {query && (
         <main className="px-4 pb-28 pt-3">
-          <p className="mb-3 text-xs text-slate-400">寃??寃곌낵 쨌 {results.length}嫄?/p>
+          <p className="mb-3 text-xs text-slate-400">검색 결과 · {results.length}건</p>
           {results.length > 0 && (
             <div className="overflow-hidden rounded-2xl bg-white shadow-[0_2px_12px_rgba(15,23,42,0.06)]">
               {results.map((stock, index) => (
@@ -114,7 +114,7 @@ function SearchPage() {
                       {highlight(stock.korName, query)}
                     </p>
                     <p className="mt-0.5 text-xs text-slate-400">
-                      {stock.companyName} 쨌 {stock.sector}
+                      {stock.companyName} · {stock.sector}
                     </p>
                   </div>
                   <ChevronRight size={16} strokeWidth={1.8} className="shrink-0 text-slate-300" />
@@ -123,9 +123,9 @@ function SearchPage() {
             </div>
           )}
         </main>
-      )}    </div>
+      )}
+    </div>
   );
 }
 
 export default SearchPage;
-
