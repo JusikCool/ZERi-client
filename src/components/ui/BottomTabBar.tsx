@@ -19,8 +19,8 @@ type BottomTabBarProps = {
 
 const defaultItems: TabItem[] = [
   { key: "home", label: "홈", href: "/" },
-  { key: "search", label: "검색" },
-  { key: "record", label: "기록" },
+  { key: "search", label: "검색", href: "/search" },
+  { key: "record", label: "기록", href: "/record" },
   { key: "my", label: "마이", href: "/my" },
 ];
 
