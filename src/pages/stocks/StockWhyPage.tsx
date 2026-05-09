@@ -18,13 +18,7 @@ function StockWhyPage() {
       <StockDetailHeader
         title={pageData.pageTitle}
         backAriaLabel={`${pageData.stock.symbol} 상세로 돌아가기`}
-        onBack={() => {
-          if (window.history.length > 1) {
-            navigate(-1);
-            return;
-          }
-          navigate(`/stocks/${pageData.stock.symbol}`);
-        }}
+        onBack={() => navigate(-1)}
       />
       <main className="space-y-4 px-0.5 pb-7 pt-4">
         <RiskReasonSummary segments={pageData.summary} />
