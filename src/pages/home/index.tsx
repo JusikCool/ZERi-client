@@ -25,7 +25,7 @@ function HomePage() {
       <div className="px-1 pb-5">
         <SearchBar />
       </div>
-      <main className="space-y-7 pb-28">
+      <main className="space-y-5 pb-28">
         <HomeGreetingSection />
         <TodayRiskSection risk={mockHomeData.todayRisk} />
         <WatchlistSection items={mockHomeData.watchlist} />
