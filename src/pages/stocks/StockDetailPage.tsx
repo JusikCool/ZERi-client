@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import DownsideRangeCard from "../../components/stock/DownsideRangeCard";
+import FanChart from "../../components/stock/FanChart";
 import ReasonLinkCard from "../../components/stock/ReasonLinkCard";
 import RecommendationBanner from "../../components/stock/RecommendationBanner";
 import RiskMetricGrid from "../../components/stock/RiskMetricGrid";
@@ -30,13 +30,7 @@ function StockDetailPage() {
       />
       <main className="space-y-3 px-0.5 pb-6 pt-5">
         <RiskSummaryCard summary={detailData.riskSummary} />
-        <RecommendationBanner
-          label={detailData.recommendation.label}
-          title={detailData.recommendation.title}
-          tone="danger"
-        />
-        <RiskMetricGrid metrics={detailData.metrics} />
-        <DownsideRangeCard range={detailData.downsideRange} />
+        <FanChart data={detailData.fanChart} />
         <ReasonLinkCard
           title={detailData.reasonLink.title}
           description={detailData.reasonLink.description}

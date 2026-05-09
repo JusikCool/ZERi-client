@@ -16,7 +16,7 @@ function SectionHeader({
   return (
     <div className={`flex items-center justify-between ${className}`.trim()}>
       <h2
-        className={`text-sm font-semibold text-slate-500 ${titleClassName}`.trim()}
+        className={`text-sm font-semibold text-slate-900 ${titleClassName}`.trim()}
       >
         {title}
       </h2>
