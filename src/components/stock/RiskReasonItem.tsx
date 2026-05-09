@@ -1,42 +1,34 @@
+import { motion } from "framer-motion";
 import type { RiskReasonSeverity } from "../../types/risk";
 import Card from "../ui/Card";
 
 type RiskReasonItemProps = {
-  index: number;
   title: string;
   description: string;
   severity: RiskReasonSeverity;
+  percent: number;
 };
 
-function RiskReasonItem({
-  index,
-  title,
-  description,
-  severity,
-}: RiskReasonItemProps) {
-  const badgeClassName =
-    severity === "neutral"
-      ? "bg-slate-100 text-slate-500"
-      : "bg-rose-50 text-rose-500";
+function RiskReasonItem({ title, description, severity, percent }: RiskReasonItemProps) {
+  const barColor = severity === "neutral" ? "bg-slate-300" : "bg-rose-400";
 
   return (
-    <Card className="rounded-[18px] border border-slate-100/90 p-4 shadow-[0_8px_20px_rgba(15,23,42,0.035)]">
-      <div className="flex items-start gap-3">
-        <div
-          className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[13px] font-bold ${badgeClassName}`}
-          aria-hidden="true"
-        >
-          {index}
-        </div>
-        <div className="min-w-0 flex-1 space-y-1">
-          <p className="text-[15px] font-bold tracking-[-0.02em] text-slate-900">
-            {title}
-          </p>
-          <p className="break-words pr-1 text-[13px] leading-[1.5] text-slate-500">
-            {description}
-          </p>
-        </div>
+    <Card className="rounded-2xl p-4">
+      <div className="flex items-center justify-between gap-2">
+        <p className="text-[14px] font-semibold text-slate-900">{title}</p>
+        <p className={`shrink-0 text-[14px] font-bold ${severity === "neutral" ? "text-slate-500" : "text-rose-500"}`}>
+          {percent}%
+        </p>
       </div>
+      <div className="my-2.5 h-1 w-full overflow-hidden rounded-full bg-slate-100">
+        <motion.div
+          className={`h-full rounded-full ${barColor}`}
+          initial={{ width: 0 }}
+          animate={{ width: `${percent}%` }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay: 0.2 }}
+        />
+      </div>
+      <p className="text-[13px] leading-[1.55] text-slate-500">{description}</p>
     </Card>
   );
 }
