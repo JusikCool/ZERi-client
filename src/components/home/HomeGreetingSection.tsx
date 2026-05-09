@@ -1,21 +1,15 @@
-type HomeGreetingSectionProps = {
-  userName: string;
-  emphasisText: string;
-  description: string;
-};
+function HomeGreetingSection() {
+  const now = new Date();
+  const month = now.getMonth() + 1;
+  const day = now.getDate();
 
-function HomeGreetingSection({
-  userName,
-  emphasisText,
-  description,
-}: HomeGreetingSectionProps) {
   return (
-    <section className="space-y-1.5">
-      <p className="text-[1.9rem] font-bold leading-[1.18] tracking-[-0.04em] text-slate-900">
-        {userName}님, <span className="text-rose-500">{emphasisText}</span>
+    <section className="space-y-1">
+      <p className="text-xs font-semibold tracking-wide text-slate-400">
+        TODAY · {month}월 {day}일
       </p>
-      <p className="text-[1.9rem] font-bold leading-[1.18] tracking-[-0.04em] text-slate-900">
-        {description}
+      <p className="text-[1.55rem] font-bold leading-[1.2] tracking-[-0.03em] text-slate-900">
+        오늘 가장 변동성이 큰 종목
       </p>
     </section>
   );
