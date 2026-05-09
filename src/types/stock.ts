@@ -1,3 +1,19 @@
+export type RiskGrade = "WARNING" | "CAUTION" | "OK";
+
+export type ChartPoint = {
+  time: number;
+  value: number;
+};
+
+export type FanChartPeriod = "D" | "W" | "M";
+
+export type FanChartData = {
+  allHistory: ChartPoint[];
+  historicalQ05: ChartPoint[];
+  q05Prices: ChartPoint[];
+  worstCasePercent: number;
+};
+
 export type StockSummary = {
   symbol: string;
   name: string;
@@ -53,7 +69,7 @@ export type StockDetailData = {
   };
   riskSummary: {
     label: string;
-    warningText: string;
+    grade: RiskGrade;
     horizonLabel: string;
     downsidePercent: number;
     description: string;
@@ -64,6 +80,7 @@ export type StockDetailData = {
   };
   metrics: RiskMetric[];
   downsideRange: DownsideRange;
+  fanChart: FanChartData;
   reasonLink: {
     title: string;
     description: string;
