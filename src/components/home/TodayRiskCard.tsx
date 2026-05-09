@@ -23,12 +23,8 @@ function TodayRiskCard({ risk }: TodayRiskCardProps) {
         subtitle={subtitle}
       />
       <div className="rounded-[18px] bg-rose-50 px-4 py-3.5">
-        <div className="flex items-center gap-1.5">
-          <span className="h-2 w-2 rounded-full bg-rose-400" />
-          <p className="text-xs font-semibold text-rose-500">{risk.riskLabel}</p>
-        </div>
-        <p className="mt-3 text-sm font-medium text-slate-500">
-          {risk.signalSummary}
+        <p className="mt-1 text-sm font-medium text-slate-500">
+          미래 30일 최악의 경우 예측 수익률
         </p>
         <div className="mt-1 flex items-end gap-2">
           <p className="text-[3.25rem] font-bold leading-none tracking-[-0.06em] text-rose-500 [font-variant-numeric:tabular-nums]">
@@ -36,7 +32,7 @@ function TodayRiskCard({ risk }: TodayRiskCardProps) {
           </p>
         </div>
         <p className="mt-2 text-xs leading-5 text-slate-400">
-          {risk.horizonLabel}
+          투자 판단과 손실은 투자자 본인에게 귀속됩니다.
         </p>
       </div>
       <div className="grid grid-cols-2 gap-2.5">

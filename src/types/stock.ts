@@ -32,10 +32,7 @@ export type StockRiskItem = {
 export type TodayRisk = {
   stock: StockSummary;
   riskLabel: string;
-  signalSummary: string;
   downsidePercent: number;
-  horizonLabel: string;
-  description: string;
 };
 
 export type HomeData = {

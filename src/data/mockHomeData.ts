@@ -10,10 +10,7 @@ export const mockHomeData: HomeData = {
       changeRate: 3.2,
     },
     riskLabel: "위험 신호",
-    signalSummary: "30일 안 최악",
     downsidePercent: -22,
-    horizonLabel: "비슷한 신호 4번 중 3번 실제로 떨어졌어요",
-    description: "비슷한 신호 4번 중 3번 실제로 떨어졌어요.",
   },
   watchlist: [
     {
