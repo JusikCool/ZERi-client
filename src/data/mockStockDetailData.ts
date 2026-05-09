@@ -145,8 +145,6 @@ export const mockStockDetailData: Record<string, StockDetailData> = {
       worstCasePercent: -22,
     },
     reasonLink: {
-      title: "왜 위험한지 알려드릴게요",
-      description: "4가지 요인이 동시에 켜졌어요",
       href: "/stocks/PLTR/why",
     },
   },

@@ -79,8 +79,6 @@ export type StockDetailData = {
   downsideRange: DownsideRange;
   fanChart: FanChartData;
   reasonLink: {
-    title: string;
-    description: string;
     href: string;
   };
 };

@@ -31,11 +31,7 @@ function StockDetailPage() {
       <main className="space-y-3 px-0.5 pb-6 pt-5">
         <RiskSummaryCard summary={detailData.riskSummary} />
         <FanChart data={detailData.fanChart} />
-        <ReasonLinkCard
-          title={detailData.reasonLink.title}
-          description={detailData.reasonLink.description}
-          href={detailData.reasonLink.href}
-        />
+        <ReasonLinkCard href={detailData.reasonLink.href} />
       </main>
     </div>
   );
