@@ -1,7 +1,6 @@
-import HomeGreetingSection from "../../components/home/HomeGreetingSection";
+﻿import HomeGreetingSection from "../../components/home/HomeGreetingSection";
 import TodayRiskSection from "../../components/home/TodayRiskSection";
 import WatchlistSection from "../../components/home/WatchlistSection";
-import BottomTabBar from "../../components/ui/BottomTabBar";
 import { mockHomeData } from "../../data/mockHomeData";
 
 function HomePage() {
@@ -18,7 +17,7 @@ function HomePage() {
         </a>
         <button
           type="button"
-          aria-label="프로필"
+          aria-label="?꾨줈??
           className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-200 text-sm font-semibold text-slate-600"
         >
           {avatarChar}
@@ -29,10 +28,9 @@ function HomePage() {
         <HomeGreetingSection />
         <TodayRiskSection risk={mockHomeData.todayRisk} />
         <WatchlistSection items={mockHomeData.watchlist} />
-      </main>
-      <BottomTabBar activeTab="home" />
-    </div>
+      </main>    </div>
   );
 }
 
 export default HomePage;
+
