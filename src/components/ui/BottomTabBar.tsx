@@ -1,7 +1,9 @@
+import { Home, Search, AlignJustify, User } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-export type TabKey = "home" | "search" | "watchlist" | "my";
-type LegacyTabKey = TabKey | "profile";
+export type TabKey = "home" | "search" | "record" | "my";
+type LegacyTabKey = TabKey | "watchlist" | "profile";
 
 type TabItem = {
   key: LegacyTabKey;
@@ -16,22 +18,23 @@ type BottomTabBarProps = {
 };
 
 const defaultItems: TabItem[] = [
-  { key: "home", label: "\uD648", href: "/" },
-  { key: "search", label: "\uAC80\uC0C9" },
-  { key: "watchlist", label: "\uAD00\uC2EC" },
-  { key: "my", label: "\uB098", href: "/my" },
+  { key: "home", label: "홈", href: "/" },
+  { key: "search", label: "검색" },
+  { key: "record", label: "기록" },
+  { key: "my", label: "마이", href: "/my" },
 ];
 
-const tabIconMap: Record<LegacyTabKey, string> = {
-  home: "⌂",
-  search: "⌕",
-  watchlist: "☆",
-  my: "•",
-  profile: "•",
+const tabIconMap: Record<TabKey, LucideIcon> = {
+  home: Home,
+  search: Search,
+  record: AlignJustify,
+  my: User,
 };
 
 function normalizeTabKey(key: LegacyTabKey): TabKey {
-  return key === "profile" ? "my" : key;
+  if (key === "watchlist") return "record";
+  if (key === "profile") return "my";
+  return key as TabKey;
 }
 
 function BottomTabBar({
@@ -43,13 +46,14 @@ function BottomTabBar({
 
   return (
     <nav
-      aria-label="\uD558\uB2E8 \uD0ED \uBC14"
-      className="fixed bottom-0 left-1/2 z-50 w-full max-w-[430px] -translate-x-1/2 border-t border-slate-200/60 bg-white px-3 pb-[calc(env(safe-area-inset-bottom)+8px)] pt-2"
+      aria-label="하단 탭 바"
+      className="fixed bottom-0 left-1/2 z-50 w-full max-w-107.5 -translate-x-1/2 border-t border-slate-200/60 bg-white px-3 pb-[calc(env(safe-area-inset-bottom)+8px)] pt-2"
     >
       <ul className="grid grid-cols-4 gap-1">
         {items.map((item) => {
           const itemKey = normalizeTabKey(item.key);
           const isActive = item.active ?? itemKey === normalizedActiveTab;
+          const Icon = tabIconMap[itemKey];
 
           return (
             <li key={item.key}>
@@ -58,23 +62,14 @@ function BottomTabBar({
                 aria-label={item.label}
                 aria-current={isActive ? "page" : undefined}
                 onClick={() => {
-                  if (item.href) {
-                    navigate(item.href);
-                  }
+                  if (item.href) navigate(item.href);
                 }}
-                className={`flex w-full cursor-pointer flex-col items-center gap-1 rounded-[14px] px-2 py-2.5 text-[11px] font-medium transition-colors active:bg-slate-50 ${
+                className={`flex w-full cursor-pointer flex-col items-center gap-1 rounded-[14px] px-2 py-2.5 transition-colors active:bg-slate-50 ${
                   isActive ? "text-blue-500" : "text-slate-400"
                 }`}
               >
-                <span
-                  className={`flex h-5 items-center justify-center text-sm ${
-                    isActive ? "text-blue-500" : "text-slate-400"
-                  }`}
-                  aria-hidden="true"
-                >
-                  {tabIconMap[item.key]}
-                </span>
-                <span>{item.label}</span>
+                <Icon size={22} strokeWidth={1.6} aria-hidden="true" />
+                <span className="text-[10px] font-medium">{item.label}</span>
               </button>
             </li>
           );
