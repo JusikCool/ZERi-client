@@ -16,7 +16,7 @@ function StockDetailPage() {
     mockStockDetailData[normalizedSymbol] ?? mockStockDetailData.PLTR;
 
   return (
-    <div className="mx-auto min-h-dvh w-full max-w-[430px] bg-[#f2f4f6] px-4 pb-8 pt-5 text-slate-900 sm:py-8">
+    <div className="mx-auto min-h-dvh w-full max-w-107.5 bg-[#f2f4f6] px-4 pb-28 pt-5 text-slate-900">
       <StockDetailHeader
         title={detailData.stock.displayTitle}
         onBack={() => {
