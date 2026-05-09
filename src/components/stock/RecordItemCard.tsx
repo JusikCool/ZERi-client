@@ -9,12 +9,6 @@ const avatarColors: Record<string, string> = {
   AAPL: "bg-emerald-100 text-emerald-700",
 };
 
-const gradeConfig = {
-  WARNING: { dot: "bg-rose-400", text: "text-rose-500", label: "높음" },
-  CAUTION: { dot: "bg-amber-400", text: "text-amber-500", label: "중간" },
-  OK: { dot: "bg-slate-400", text: "text-slate-500", label: "보통" },
-};
-
 const outcomeConfig = {
   down: { prefix: "하락", color: "text-rose-500" },
   up: { prefix: "상승", color: "text-blue-500" },
@@ -23,7 +17,6 @@ const outcomeConfig = {
 
 function RecordItemCard({ item }: Props) {
   const avatar = avatarColors[item.symbol] ?? "bg-slate-100 text-slate-600";
-  const grade = gradeConfig[item.grade];
   const outcome = outcomeConfig[item.outcome];
   const sign = item.outcomePercent >= 0 ? "+" : "";
 
