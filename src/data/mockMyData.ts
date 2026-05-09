@@ -54,12 +54,6 @@ export const mockMyData: MyData = {
       iconLabel: "관심",
     },
     {
-      id: "reports",
-      label: "리스크 리포트 기록",
-      description: "이전에 확인한 리포트를 다시 볼 수 있어요",
-      iconLabel: "기록",
-    },
-    {
       id: "support",
       label: "문의하기",
       description: "서비스 이용 중 궁금한 점을 남겨요",
