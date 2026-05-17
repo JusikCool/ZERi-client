@@ -1,5 +1,5 @@
-import { useEffect, type ReactNode } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 import BottomTabBar from "./BottomTabBar";
 import type { TabKey } from "./BottomTabBar";
 
@@ -10,7 +10,7 @@ function getActiveTab(pathname: string): TabKey {
   return "home";
 }
 
-function AppLayout({ children }: { children: ReactNode }) {
+function AppLayout() {
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -19,7 +19,7 @@ function AppLayout({ children }: { children: ReactNode }) {
 
   return (
     <>
-      {children}
+      <Outlet />
       <BottomTabBar activeTab={getActiveTab(pathname)} />
     </>
   );
