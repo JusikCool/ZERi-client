@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useRecord } from "../../hooks/record/useRecord";
 import RecordItemCard from "../../components/stock/RecordItemCard";
@@ -12,7 +13,25 @@ const itemVariants = {
 };
 
 function RecordPage() {
-  const { items, loading, error } = useRecord();
+  const { items, loading, loadingMore, error, hasMore, loadMore } = useRecord();
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !loadingMore) {
+          loadMore();
+        }
+      },
+      { rootMargin: "120px" },
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [hasMore, loadingMore, loadMore]);
 
   return (
     <div className="mx-auto min-h-dvh w-full max-w-107.5 bg-[#f2f4f6] px-4 pt-6 text-slate-900">
@@ -53,7 +72,18 @@ function RecordPage() {
               </motion.div>
             ))
           )}
-          {items.length > 0 && (
+
+          <div ref={sentinelRef} />
+
+          {loadingMore && (
+            <div className="space-y-3">
+              {[...Array(2)].map((_, i) => (
+                <div key={i} className="h-28 animate-pulse rounded-2xl bg-slate-200" />
+              ))}
+            </div>
+          )}
+
+          {!hasMore && items.length > 0 && (
             <motion.p
               variants={itemVariants}
               className="px-1 pt-2 text-center text-[11px] leading-5 text-slate-400"
