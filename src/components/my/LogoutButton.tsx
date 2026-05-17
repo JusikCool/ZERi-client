@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { getRefreshToken } from "../../apis/auth";
-import { logout } from "../../apis/authApi";
+import { logout } from "../../apis/modules/authApi";
 
 function LogoutButton() {
   const navigate = useNavigate();

@@ -1,10 +1,68 @@
-﻿import HomeGreetingSection from "../../components/home/HomeGreetingSection";
+import { useEffect, useState } from "react";
+import { getMe, getWatchlist } from "../../apis/modules/meApi";
+import { getRiskVerdict, getSpotlight } from "../../apis/modules/riskApi";
+import { parseDecimal } from "../../apis/utils";
+import HomeGreetingSection from "../../components/home/HomeGreetingSection";
 import TodayRiskSection from "../../components/home/TodayRiskSection";
 import WatchlistSection from "../../components/home/WatchlistSection";
-import { mockHomeData } from "../../data/mockHomeData";
+import type { StockRiskItem, TodayRisk } from "../../types/stock";
 
 function HomePage() {
-  const avatarChar = mockHomeData.userName.charAt(0);
+  const [avatarChar, setAvatarChar] = useState("?");
+  const [spotlight, setSpotlight] = useState<TodayRisk | null>(null);
+  const [watchlist, setWatchlist] = useState<StockRiskItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [user, watchlistItems] = await Promise.all([getMe(), getWatchlist()]);
+        const scope = watchlistItems.length > 0 ? "watchlist" : "all";
+        const spotlightRes = await getSpotlight(scope);
+
+        setAvatarChar(user.name.charAt(0));
+
+        if (spotlightRes.spotlight) {
+          const s = spotlightRes.spotlight;
+          setSpotlight({
+            stock: {
+              symbol: s.ticker,
+              name: s.company_name_kr ?? s.ticker,
+              price: parseDecimal(s.current_price) ?? undefined,
+            },
+            riskLabel: "위험 신호",
+            downsidePercent: (parseDecimal(s.worst_case_pct) ?? 0) * 100,
+          });
+        }
+
+        const riskResults = await Promise.allSettled(
+          watchlistItems.map((item) => getRiskVerdict(item.ticker, false)),
+        );
+
+        setWatchlist(
+          watchlistItems.map((item, i) => {
+            const result = riskResults[i];
+            const pct =
+              result.status === "fulfilled"
+                ? (parseDecimal(result.value.grade.worst_case_pct) ?? 0) * 100
+                : 0;
+            return {
+              symbol: item.ticker,
+              name: item.company_name_kr ?? item.company_name,
+              riskPercent: pct,
+              periodLabel: "30일 최악",
+            };
+          }),
+        );
+      } catch {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
 
   return (
     <div className="mx-auto min-h-dvh w-full max-w-107.5 bg-[#f2f4f6] px-4 pt-6 text-slate-900 sm:py-8">
@@ -21,11 +79,31 @@ function HomePage() {
         </button>
       </header>
 
-      <main className="space-y-5 pb-28">
-        <HomeGreetingSection />
-        <TodayRiskSection risk={mockHomeData.todayRisk} />
-        <WatchlistSection items={mockHomeData.watchlist} />
-      </main>
+      {loading ? (
+        <div className="space-y-5 pb-28">
+          <div className="h-5 w-40 animate-pulse rounded-lg bg-slate-200" />
+          <div className="h-52 animate-pulse rounded-[20px] bg-slate-200" />
+          <div className="h-40 animate-pulse rounded-[20px] bg-slate-200" />
+        </div>
+      ) : error ? (
+        <div className="flex flex-col items-center justify-center pt-24 text-center">
+          <p className="text-sm font-medium text-slate-500">데이터를 불러오지 못했어요</p>
+          <p className="mt-1 text-xs text-slate-400">잠시 후 다시 시도해주세요</p>
+        </div>
+      ) : (
+        <main className="space-y-5 pb-28">
+          <HomeGreetingSection />
+          {spotlight ? (
+            <TodayRiskSection risk={spotlight} />
+          ) : (
+            <div className="rounded-[20px] bg-white px-5 py-6 text-center shadow-[0_8px_24px_rgba(15,23,42,0.03)]">
+              <p className="text-sm font-medium text-slate-500">현재 위험 신호가 없어요</p>
+              <p className="mt-1 text-xs text-slate-400">모든 종목이 안정적인 상태예요</p>
+            </div>
+          )}
+          <WatchlistSection items={watchlist} />
+        </main>
+      )}
     </div>
   );
 }
