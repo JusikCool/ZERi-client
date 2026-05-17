@@ -103,3 +103,11 @@ export type HistoryStats = {
   by_outcome: HistoryOutcomeCounts;
   by_grade_outcome: Record<string, unknown>;
 };
+
+export type TickerSearchItem = {
+  ticker: string;
+  company_name: string;
+  company_name_kr?: string | null;
+  sector?: string | null;
+  market_cap?: number | null;
+};
