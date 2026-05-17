@@ -19,10 +19,16 @@ export async function getHistoryStats(): Promise<HistoryStats> {
   return res.data.data;
 }
 
-export async function getHistory(limit = 50): Promise<HistoryItem[]> {
+export async function getHistory(
+  limit = 20,
+  cursor?: string,
+): Promise<{ items: HistoryItem[]; nextCursor: string | null }> {
   const res = await http.get<ApiResponse<{ items: HistoryItem[]; total_count: number }>>(
     ENDPOINTS.me.history,
-    { params: { limit } },
+    { params: { limit, ...(cursor ? { cursor } : {}) } },
   );
-  return res.data.data.items;
+  return {
+    items: res.data.data.items,
+    nextCursor: res.data.meta?.next_cursor ?? null,
+  };
 }
