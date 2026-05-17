@@ -95,7 +95,14 @@ function HomePage() {
       ) : (
         <main className="space-y-5 pb-28">
           <HomeGreetingSection />
-          {spotlight && <TodayRiskSection risk={spotlight} />}
+          {spotlight ? (
+            <TodayRiskSection risk={spotlight} />
+          ) : (
+            <div className="rounded-[20px] bg-white px-5 py-6 text-center shadow-[0_8px_24px_rgba(15,23,42,0.03)]">
+              <p className="text-sm font-medium text-slate-500">현재 위험 신호가 없어요</p>
+              <p className="mt-1 text-xs text-slate-400">모든 종목이 안정적인 상태예요</p>
+            </div>
+          )}
           <WatchlistSection items={watchlist} />
         </main>
       )}
