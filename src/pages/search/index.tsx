@@ -1,9 +1,7 @@
 import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { searchTickers } from "../../apis/modules/tickerApi";
-import { ApiClientError } from "../../apis/error";
-import type { TickerSearchItem } from "../../apis/types";
+import { useSearch } from "../../hooks/search/useSearch";
 
 const AVATAR_COLORS = [
   "bg-rose-100 text-rose-600",
@@ -36,32 +34,8 @@ function highlight(text: string, query: string) {
 function SearchPage() {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<TickerSearchItem[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (!query.trim()) return;
-
-    const timer = setTimeout(async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const items = await searchTickers(query.trim());
-        setResults(items);
-      } catch (err) {
-        setError(err instanceof ApiClientError ? err.message : "검색 중 오류가 발생했어요.");
-        setResults([]);
-      } finally {
-        setLoading(false);
-      }
-    }, 350);
-
-    return () => clearTimeout(timer);
-  }, [query]);
-
-  const displayName = (item: TickerSearchItem) => item.company_name_kr ?? item.company_name;
+  const { results, loading, error } = useSearch(query);
 
   return (
     <div className="mx-auto min-h-dvh w-full max-w-107.5 bg-[#f2f4f6] text-slate-900">
@@ -133,7 +107,7 @@ function SearchPage() {
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="text-[15px] font-semibold text-slate-900">
-                          {highlight(displayName(item), query)}
+                          {highlight(item.company_name_kr ?? item.company_name, query)}
                         </p>
                         <p className="mt-0.5 text-xs text-slate-400">
                           {item.company_name}

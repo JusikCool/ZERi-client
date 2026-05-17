@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { setUnauthorizedHandler } from "./apis/http";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import AppLayout from "./components/ui/AppLayout";
+import { useAuthStore } from "./stores/authStore";
 import LoginPage from "./pages/auth/LoginPage";
 import SignupPage from "./pages/auth/SignupPage";
 import HomePage from "./pages/home";
@@ -14,10 +15,14 @@ import StockWhyPage from "./pages/stocks/StockWhyPage";
 
 function App() {
   const navigate = useNavigate();
+  const clearUser = useAuthStore((s) => s.clearUser);
 
   useEffect(() => {
-    setUnauthorizedHandler(() => navigate("/login", { replace: true }));
-  }, [navigate]);
+    setUnauthorizedHandler(() => {
+      clearUser();
+      navigate("/login", { replace: true });
+    });
+  }, [navigate, clearUser]);
 
   return (
     <Routes>
