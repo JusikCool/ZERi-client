@@ -1,9 +1,14 @@
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { getHistoryStats, getMe } from "../../apis/modules/meApi";
+import type { HistoryStats } from "../../apis/types";
+import DashboardStatsSection from "../../components/my/DashboardStatsSection";
 import LogoutButton from "../../components/my/LogoutButton";
 import ModelStatusCard from "../../components/my/ModelStatusCard";
 import MyHeader from "../../components/my/MyHeader";
 import MyMenuSection from "../../components/my/MyMenuSection";
 import { mockMyData } from "../../data/mockMyData";
+import type { DashboardStat } from "../../types/my";
 
 const itemVariants = {
   hidden: { opacity: 0, y: 16 },
@@ -14,11 +19,51 @@ const itemVariants = {
   },
 };
 
+function buildStats(stats: HistoryStats): DashboardStat[] {
+  const { total_analyses, by_outcome } = stats;
+  const resolved = total_analyses - by_outcome.pending;
+  const hitRate =
+    resolved > 0 ? `${Math.round((by_outcome.price_dropped / resolved) * 100)}%` : "—";
+
+  return [
+    {
+      id: "reviews",
+      label: "재검토",
+      value: String(total_analyses),
+      helperText: "번",
+      tone: "primary",
+    },
+    {
+      id: "actual-downside",
+      label: "실제 하락",
+      value: String(by_outcome.price_dropped),
+      helperText: "건",
+      tone: "danger",
+    },
+    { id: "hit-rate", label: "적중률", value: hitRate, helperText: "최근 30일", tone: "success" },
+  ];
+}
+
 function MyPage() {
+  const [userName, setUserName] = useState<string>("");
+  const [stats, setStats] = useState<DashboardStat[]>(mockMyData.stats);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [user, historyStats] = await Promise.all([getMe(), getHistoryStats()]);
+        setUserName(user.name);
+        setStats(buildStats(historyStats));
+      } catch {
+        // 실패 시 mock 데이터 유지
+      }
+    }
+    fetchData();
+  }, []);
+
   const viewModel = {
-    userName: mockMyData.user.name,
-    summary: mockMyData.summary,
-    stats: mockMyData.stats,
+    userName: userName || mockMyData.user.name,
+    stats,
     modelStatus: mockMyData.modelStatus,
     menuItems: mockMyData.menuItems,
   };
@@ -38,6 +83,9 @@ function MyPage() {
         animate="visible"
         variants={{ visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } } }}
       >
+        <motion.div variants={itemVariants} className="pt-1">
+          <DashboardStatsSection stats={viewModel.stats} />
+        </motion.div>
         <motion.div variants={itemVariants} className="pt-1">
           <ModelStatusCard status={viewModel.modelStatus} />
         </motion.div>
