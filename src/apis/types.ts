@@ -111,3 +111,44 @@ export type TickerSearchItem = {
   sector?: string | null;
   market_cap?: number | null;
 };
+
+export type LatestPriceItem = {
+  ticker: string;
+  company_name_kr?: string | null;
+  sector?: string | null;
+  trade_date: string;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+};
+
+export type PricesResponse = {
+  as_of?: string | null;
+  requested: number;
+  fetched: number;
+  missing: string[];
+  items: LatestPriceItem[];
+};
+
+export type RiskXaiFeature = {
+  feature: string;
+  weight: number;
+  label: string;
+  description?: string | null;
+};
+
+export type RiskPathData = {
+  ticker: string;
+  base_date: string;
+  horizon_days: number;
+  q05_path: number[];
+  q15_path: number[];
+};
+
+export type RiskAttentionData = {
+  ticker: string;
+  base_date: string;
+  features: RiskXaiFeature[];
+};

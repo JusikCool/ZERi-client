@@ -29,7 +29,7 @@ function RiskSummaryCard({ summary }: RiskSummaryCardProps) {
   const styles = gradeStyles[summary.grade];
 
   const count = useMotionValue(0);
-  const rounded = useTransform(count, (v) => `${Math.round(v)}%`);
+  const rounded = useTransform(count, (v) => `${v.toFixed(2)}%`);
 
   useEffect(() => {
     const controls = animate(count, summary.downsidePercent, {
