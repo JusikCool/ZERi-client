@@ -4,6 +4,7 @@ import FanChart from "../../components/stock/FanChart";
 import ReasonLinkCard from "../../components/stock/ReasonLinkCard";
 import RiskSummaryCard from "../../components/stock/RiskSummaryCard";
 import StockDetailHeader from "../../components/stock/StockDetailHeader";
+import { useWatchlistToggle } from "../../hooks/stock/useWatchlistToggle";
 import { mockStockDetailData } from "../../mocks/mockStockDetailData";
 
 function StockDetailPage() {
@@ -12,6 +13,8 @@ function StockDetailPage() {
 
   const normalizedSymbol = symbol?.toUpperCase() ?? "PLTR";
   const detailData = mockStockDetailData[normalizedSymbol] ?? mockStockDetailData.PLTR;
+
+  const { isInWatchlist, loading: watchlistLoading, toggle } = useWatchlistToggle(normalizedSymbol);
 
   return (
     <div className="mx-auto min-h-dvh w-full max-w-107.5 bg-[#f2f4f6] px-4 pb-28 pt-5 text-slate-900">
@@ -25,6 +28,9 @@ function StockDetailPage() {
 
           navigate("/");
         }}
+        watchlisted={isInWatchlist}
+        watchlistLoading={watchlistLoading}
+        onToggleWatchlist={toggle}
       />
       <motion.main
         className="space-y-3 px-0.5 pb-6 pt-5"
