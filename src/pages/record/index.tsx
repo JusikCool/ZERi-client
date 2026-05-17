@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
+import { useRecord } from "../../hooks/record/useRecord";
 import RecordItemCard from "../../components/stock/RecordItemCard";
-import { mockRecordData } from "../../mocks/mockRecordData";
 
 const itemVariants = {
   hidden: { opacity: 0, y: 16 },
@@ -12,6 +12,8 @@ const itemVariants = {
 };
 
 function RecordPage() {
+  const { items, loading, error } = useRecord();
+
   return (
     <div className="mx-auto min-h-dvh w-full max-w-107.5 bg-[#f2f4f6] px-4 pt-6 text-slate-900">
       <motion.header
@@ -22,24 +24,45 @@ function RecordPage() {
       >
         <h1 className="text-[1.375rem] font-bold tracking-[-0.04em] text-slate-900">기록</h1>
       </motion.header>
-      <motion.main
-        className="space-y-3 pb-28"
-        initial="hidden"
-        animate="visible"
-        variants={{ visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } } }}
-      >
-        {mockRecordData.map((item) => (
-          <motion.div key={item.id} variants={itemVariants}>
-            <RecordItemCard item={item} />
-          </motion.div>
-        ))}
-        <motion.p
-          variants={itemVariants}
-          className="px-1 pt-2 text-center text-[11px] leading-5 text-slate-400"
+
+      {loading ? (
+        <div className="space-y-3 pb-28">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="h-28 animate-pulse rounded-2xl bg-slate-200" />
+          ))}
+        </div>
+      ) : error ? (
+        <div className="rounded-2xl bg-rose-50 px-4 py-3">
+          <p className="text-sm text-rose-500">{error}</p>
+        </div>
+      ) : (
+        <motion.main
+          className="space-y-3 pb-28"
+          initial="hidden"
+          animate="visible"
+          variants={{ visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } } }}
         >
-          투자 판단과 손실은 투자자 본인에게 귀속됩니다.
-        </motion.p>
-      </motion.main>
+          {items.length === 0 ? (
+            <motion.p variants={itemVariants} className="pt-16 text-center text-sm text-slate-400">
+              아직 조회한 종목이 없어요
+            </motion.p>
+          ) : (
+            items.map((item) => (
+              <motion.div key={item.id} variants={itemVariants}>
+                <RecordItemCard item={item} />
+              </motion.div>
+            ))
+          )}
+          {items.length > 0 && (
+            <motion.p
+              variants={itemVariants}
+              className="px-1 pt-2 text-center text-[11px] leading-5 text-slate-400"
+            >
+              투자 판단과 손실은 투자자 본인에게 귀속됩니다.
+            </motion.p>
+          )}
+        </motion.main>
+      )}
     </div>
   );
 }
