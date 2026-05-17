@@ -12,6 +12,7 @@ function HomePage() {
   const [spotlight, setSpotlight] = useState<TodayRisk | null>(null);
   const [watchlist, setWatchlist] = useState<StockRiskItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -56,6 +57,8 @@ function HomePage() {
             };
           }),
         );
+      } catch {
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -83,6 +86,11 @@ function HomePage() {
           <div className="h-5 w-40 animate-pulse rounded-lg bg-slate-200" />
           <div className="h-52 animate-pulse rounded-[20px] bg-slate-200" />
           <div className="h-40 animate-pulse rounded-[20px] bg-slate-200" />
+        </div>
+      ) : error ? (
+        <div className="flex flex-col items-center justify-center pt-24 text-center">
+          <p className="text-sm font-medium text-slate-500">데이터를 불러오지 못했어요</p>
+          <p className="mt-1 text-xs text-slate-400">잠시 후 다시 시도해주세요</p>
         </div>
       ) : (
         <main className="space-y-5 pb-28">

@@ -47,7 +47,7 @@ function TodayRiskCard({ risk }: TodayRiskCardProps) {
         <Button variant="secondary" onClick={() => navigate(`/stocks/${risk.stock.symbol}/why`)}>
           왜 위험한가요?
         </Button>
-        <Button onClick={() => navigate("/stocks/PLTR")}>자세히 보기</Button>
+        <Button onClick={() => navigate(`/stocks/${risk.stock.symbol}`)}>자세히 보기</Button>
       </div>
     </Card>
   );
