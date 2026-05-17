@@ -17,11 +17,9 @@ function HomePage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const [user, spotlightRes, watchlistItems] = await Promise.all([
-          getMe(),
-          getSpotlight("all"),
-          getWatchlist(),
-        ]);
+        const [user, watchlistItems] = await Promise.all([getMe(), getWatchlist()]);
+        const scope = watchlistItems.length > 0 ? "watchlist" : "all";
+        const spotlightRes = await getSpotlight(scope);
 
         setAvatarChar(user.name.charAt(0));
 
