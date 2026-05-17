@@ -40,6 +40,7 @@ function FanChart({ data }: FanChartProps) {
   const histSeriesRef = useRef<ISeriesApi<"Area"> | null>(null);
   const histQ05SeriesRef = useRef<ISeriesApi<"Line"> | null>(null);
   const fanSeriesRef = useRef<ISeriesApi<"Baseline"> | null>(null);
+  const q15SeriesRef = useRef<ISeriesApi<"Line"> | null>(null);
   const [period, setPeriod] = useState<FanChartPeriod>("D");
   const [showHistQ05, setShowHistQ05] = useState(false);
 
@@ -71,9 +72,7 @@ function FanChart({ data }: FanChartProps) {
           labelBackgroundColor: "#475569",
         },
       },
-      localization: {
-        dateFormat: "yy.MM.dd",
-      },
+      localization: { dateFormat: "yy.MM.dd" },
       rightPriceScale: {
         borderVisible: false,
         autoScale: true,
@@ -107,6 +106,7 @@ function FanChart({ data }: FanChartProps) {
 
     chartRef.current = chart;
 
+    // 실제 종가 (빨간 영역)
     const histSeries = chart.addSeries(AreaSeries, {
       lineColor: "#ef4444",
       topColor: "rgba(239,68,68,0.18)",
@@ -121,6 +121,7 @@ function FanChart({ data }: FanChartProps) {
     });
     histSeriesRef.current = histSeries;
 
+    // 과거 Q05 예측 (인디고 점선, 토글)
     const histQ05Series = chart.addSeries(LineSeries, {
       color: "#818cf8",
       lineWidth: 1,
@@ -135,7 +136,30 @@ function FanChart({ data }: FanChartProps) {
     });
     histQ05SeriesRef.current = histQ05Series;
 
-    const baselinePrice = data.allHistory[data.allHistory.length - 1].value;
+    // Q0.15 미래 예측 (앰버 점선)
+    const q15Series = chart.addSeries(LineSeries, {
+      color: "#f59e0b",
+      lineWidth: 1,
+      lineStyle: LineStyle.Dashed,
+      lastValueVisible: false,
+      priceLineVisible: false,
+      crosshairMarkerVisible: true,
+      crosshairMarkerRadius: 3,
+      crosshairMarkerBorderColor: "#f59e0b",
+      crosshairMarkerBackgroundColor: "#f59e0b",
+    });
+    if (data.q15Prices && data.q15Prices.length > 1) {
+      q15Series.setData(
+        data.q15Prices.slice(1).map((p) => ({ time: toTime(p.time), value: p.value })),
+      );
+    }
+    q15SeriesRef.current = q15Series;
+
+    // Q0.05 미래 예측 (회색 기준선)
+    const baselinePrice =
+      data.allHistory.length > 0
+        ? data.allHistory[data.allHistory.length - 1].value
+        : (data.q05Prices[0]?.value ?? 0);
     const fanSeries = chart.addSeries(BaselineSeries, {
       baseValue: { type: "price", price: baselinePrice },
       topLineColor: "transparent",
@@ -170,6 +194,7 @@ function FanChart({ data }: FanChartProps) {
       histSeriesRef.current = null;
       histQ05SeriesRef.current = null;
       fanSeriesRef.current = null;
+      q15SeriesRef.current = null;
     };
   }, [data]);
 
@@ -186,10 +211,9 @@ function FanChart({ data }: FanChartProps) {
     const histSlice = data.historicalQ05
       .slice(-count)
       .map((p) => ({ time: toTime(p.time), value: p.value }));
-    const futureSlice = data.q05Prices.slice(1).map((p) => ({
-      time: toTime(p.time),
-      value: p.value,
-    }));
+    const futureSlice = data.q05Prices
+      .slice(1)
+      .map((p) => ({ time: toTime(p.time), value: p.value }));
     q05Series.setData([...histSlice, ...futureSlice]);
     chart.timeScale().fitContent();
   }, [period, data]);
@@ -204,7 +228,7 @@ function FanChart({ data }: FanChartProps) {
   return (
     <Card className="rounded-[20px] p-4">
       <div className="mb-3 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <div className="flex rounded-lg bg-slate-100 p-0.5">
             {PERIODS.map(({ key, label }) => (
               <button
@@ -230,6 +254,12 @@ function FanChart({ data }: FanChartProps) {
               <div className="h-0.5 w-3 border-t-2 border-dashed border-slate-400" />
               <span className="text-[10px] text-slate-400">Q0.05</span>
             </div>
+            {data.q15Prices && data.q15Prices.length > 0 && (
+              <div className="flex items-center gap-1">
+                <div className="h-0.5 w-3 border-t-2 border-dashed border-amber-400" />
+                <span className="text-[10px] text-amber-500">Q0.15</span>
+              </div>
+            )}
             <button
               type="button"
               onClick={() => setShowHistQ05((v) => !v)}

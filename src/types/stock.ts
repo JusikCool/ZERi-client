@@ -11,6 +11,7 @@ export type FanChartData = {
   allHistory: ChartPoint[];
   historicalQ05: ChartPoint[];
   q05Prices: ChartPoint[];
+  q15Prices?: ChartPoint[];
   worstCasePercent: number;
 };
 
