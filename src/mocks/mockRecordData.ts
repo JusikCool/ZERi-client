@@ -1,6 +1,6 @@
 export type RecordGrade = "WARNING" | "CAUTION" | "OK";
 
-export type RecordOutcome = "down" | "up" | "flat";
+export type RecordOutcome = "down" | "up" | "flat" | "pending";
 
 export type RecordItem = {
   id: string;

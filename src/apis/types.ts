@@ -91,6 +91,19 @@ export type RiskVerdictData = {
   analysis_id?: number | null;
 };
 
+export type HistoryItem = {
+  analysis_id: number;
+  ticker: string;
+  company_name_kr?: string | null;
+  grade: string;
+  worst_case_pct?: DecimalString | null;
+  price_at_query: DecimalString;
+  queried_at: string;
+  outcome?: string | null;
+  outcome_pct?: DecimalString | null;
+  outcome_evaluated_at?: string | null;
+};
+
 export type HistoryOutcomeCounts = {
   price_dropped: number;
   price_rose: number;
