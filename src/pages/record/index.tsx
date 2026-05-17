@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import RecordItemCard from "../../components/stock/RecordItemCard";
-import { mockRecordData } from "../../data/mockRecordData";
+import { mockRecordData } from "../../mocks/mockRecordData";
 
 const itemVariants = {
   hidden: { opacity: 0, y: 16 },

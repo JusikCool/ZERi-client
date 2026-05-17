@@ -4,7 +4,7 @@ import FanChart from "../../components/stock/FanChart";
 import ReasonLinkCard from "../../components/stock/ReasonLinkCard";
 import RiskSummaryCard from "../../components/stock/RiskSummaryCard";
 import StockDetailHeader from "../../components/stock/StockDetailHeader";
-import { mockStockDetailData } from "../../data/mockStockDetailData";
+import { mockStockDetailData } from "../../mocks/mockStockDetailData";
 
 function StockDetailPage() {
   const navigate = useNavigate();

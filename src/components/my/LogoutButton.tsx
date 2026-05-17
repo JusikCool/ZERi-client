@@ -1,19 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { getRefreshToken } from "../../apis/auth";
-import { logout } from "../../apis/modules/authApi";
+import { useAuth } from "../../hooks/auth/useAuth";
 
 function LogoutButton() {
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   async function handleLogout() {
-    const token = getRefreshToken();
-    if (token) {
-      try {
-        await logout(token);
-      } catch {
-        // 토큰 만료 등 서버 오류여도 로컬 토큰은 이미 삭제됨
-      }
-    }
+    await logout();
     navigate("/login", { replace: true });
   }
 

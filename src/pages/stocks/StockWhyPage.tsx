@@ -3,7 +3,7 @@ import RiskReasonList from "../../components/stock/RiskReasonList";
 import RiskReasonSummary from "../../components/stock/RiskReasonSummary";
 import SimilarCasesSection from "../../components/stock/SimilarCasesSection";
 import StockDetailHeader from "../../components/stock/StockDetailHeader";
-import { mockRiskReasonData } from "../../data/mockRiskReasonData";
+import { mockRiskReasonData } from "../../mocks/mockRiskReasonData";
 
 function StockWhyPage() {
   const navigate = useNavigate();

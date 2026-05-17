@@ -1,4 +1,4 @@
-import type { RecordItem } from "../../data/mockRecordData";
+import type { RecordItem } from "../../mocks/mockRecordData";
 
 type Props = { item: RecordItem };
 

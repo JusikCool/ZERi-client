@@ -1,27 +1,17 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../../apis/modules/authApi";
-import { ApiClientError } from "../../apis/error";
+import { useAuth } from "../../hooks/auth/useAuth";
 
 function LoginPage() {
   const navigate = useNavigate();
+  const { login, loading, error } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: { preventDefault(): void }) {
     e.preventDefault();
-    setError(null);
-    setLoading(true);
-    try {
-      await login(email, password);
-      navigate("/", { replace: true });
-    } catch (err) {
-      setError(err instanceof ApiClientError ? err.message : "알 수 없는 오류가 발생했습니다.");
-    } finally {
-      setLoading(false);
-    }
+    const ok = await login(email, password);
+    if (ok) navigate("/", { replace: true });
   }
 
   return (
