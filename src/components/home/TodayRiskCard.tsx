@@ -31,15 +31,9 @@ function TodayRiskCard({ risk }: TodayRiskCardProps) {
 
   return (
     <Card className="space-y-4 p-4">
-      <StockIdentity
-        symbol={risk.stock.symbol}
-        name={risk.stock.name}
-        subtitle={subtitle}
-      />
+      <StockIdentity symbol={risk.stock.symbol} name={risk.stock.name} subtitle={subtitle} />
       <div className="rounded-[18px] bg-rose-50 px-4 py-3.5">
-        <p className="mt-1 text-sm font-medium text-slate-500">
-          미래 30일 최악의 경우 예측 수익률
-        </p>
+        <p className="mt-1 text-sm font-medium text-slate-500">미래 30일 최악의 경우 예측 수익률</p>
         <div className="mt-1 flex items-end gap-2">
           <motion.p className="text-[3.25rem] font-bold leading-none tracking-[-0.06em] text-rose-500 [font-variant-numeric:tabular-nums]">
             {rounded}
@@ -50,10 +44,7 @@ function TodayRiskCard({ risk }: TodayRiskCardProps) {
         </p>
       </div>
       <div className="grid grid-cols-2 gap-2.5">
-        <Button
-          variant="secondary"
-          onClick={() => navigate(`/stocks/${risk.stock.symbol}/why`)}
-        >
+        <Button variant="secondary" onClick={() => navigate(`/stocks/${risk.stock.symbol}/why`)}>
           왜 위험한가요?
         </Button>
         <Button onClick={() => navigate("/stocks/PLTR")}>자세히 보기</Button>

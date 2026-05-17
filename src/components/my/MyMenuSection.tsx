@@ -7,10 +7,7 @@ type MyMenuSectionProps = {
   items: MyMenuItemData[];
 };
 
-function MyMenuSection({
-  title = "\uAD00\uB9AC",
-  items,
-}: MyMenuSectionProps) {
+function MyMenuSection({ title = "\uAD00\uB9AC", items }: MyMenuSectionProps) {
   return (
     <section className="space-y-2.5">
       <SectionHeader

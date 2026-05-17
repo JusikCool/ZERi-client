@@ -42,9 +42,7 @@ function MyMenuItem({ item, isLast = false }: MyMenuItemProps) {
             {item.label}
           </p>
           {item.description ? (
-            <p className="text-[12px] leading-[1.4] text-slate-500">
-              {item.description}
-            </p>
+            <p className="text-[12px] leading-[1.4] text-slate-500">{item.description}</p>
           ) : null}
         </div>
         <span aria-hidden="true" className="text-base leading-none text-slate-400">

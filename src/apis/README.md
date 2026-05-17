@@ -35,9 +35,9 @@ try {
   await http.post(ENDPOINTS.auth.login, { email, password });
 } catch (err) {
   if (err instanceof ApiClientError) {
-    console.log(err.code);       // 서버 에러 코드
+    console.log(err.code); // 서버 에러 코드
     console.log(err.statusCode); // HTTP 상태 코드
-    console.log(err.message);    // 사용자 노출 메시지
+    console.log(err.message); // 사용자 노출 메시지
   }
 }
 ```

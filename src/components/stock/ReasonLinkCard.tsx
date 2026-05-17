@@ -24,10 +24,7 @@ function ReasonLinkCard({ href }: ReasonLinkCardProps) {
             </p>
             <p className="text-xs text-slate-400">핵심 변수 5개</p>
           </div>
-          <span
-            aria-hidden="true"
-            className="text-lg font-semibold leading-none text-blue-500"
-          >
+          <span aria-hidden="true" className="text-lg font-semibold leading-none text-blue-500">
             →
           </span>
         </div>

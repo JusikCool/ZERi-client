@@ -5,9 +5,7 @@ type MyHeaderProps = {
 function MyHeader({ title = "유진님" }: MyHeaderProps) {
   return (
     <header className="flex items-center justify-between px-0.5 pb-4 pt-1">
-      <span className="text-[22px] font-bold tracking-[-0.03em] text-slate-900">
-        {title}
-      </span>
+      <span className="text-[22px] font-bold tracking-[-0.03em] text-slate-900">{title}</span>
     </header>
   );
 }

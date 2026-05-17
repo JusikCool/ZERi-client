@@ -11,8 +11,7 @@ function StockDetailPage() {
   const { symbol } = useParams<{ symbol: string }>();
 
   const normalizedSymbol = symbol?.toUpperCase() ?? "PLTR";
-  const detailData =
-    mockStockDetailData[normalizedSymbol] ?? mockStockDetailData.PLTR;
+  const detailData = mockStockDetailData[normalizedSymbol] ?? mockStockDetailData.PLTR;
 
   return (
     <div className="mx-auto min-h-dvh w-full max-w-107.5 bg-[#f2f4f6] px-4 pb-28 pt-5 text-slate-900">
@@ -45,7 +44,14 @@ function StockDetailPage() {
             key={i}
             variants={{
               hidden: { opacity: 0, y: 16 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: {
+                  duration: 0.4,
+                  ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+                },
+              },
             }}
           >
             {child}

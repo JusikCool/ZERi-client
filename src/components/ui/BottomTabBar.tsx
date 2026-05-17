@@ -37,10 +37,7 @@ function normalizeTabKey(key: LegacyTabKey): TabKey {
   return key as TabKey;
 }
 
-function BottomTabBar({
-  items = defaultItems,
-  activeTab = "home",
-}: BottomTabBarProps) {
+function BottomTabBar({ items = defaultItems, activeTab = "home" }: BottomTabBarProps) {
   const navigate = useNavigate();
   const normalizedActiveTab = normalizeTabKey(activeTab);
 

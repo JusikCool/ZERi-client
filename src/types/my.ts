@@ -1,8 +1,4 @@
-export type DashboardStatTone =
-  | "default"
-  | "primary"
-  | "danger"
-  | "success";
+export type DashboardStatTone = "default" | "primary" | "danger" | "success";
 
 export type DashboardStat = {
   id: string;

@@ -1,11 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  font-family:
-    "Pretendard",
-    "Apple SD Gothic Neo",
-    "Noto Sans KR",
-    sans-serif;
+  font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
   color: #111827;
   background-color: #f6f7fb;
   text-rendering: optimizeLegibility;

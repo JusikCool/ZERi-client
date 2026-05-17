@@ -153,9 +153,7 @@ function FanChart({ data }: FanChartProps) {
       crosshairMarkerBorderColor: "rgb(156,163,175)",
       crosshairMarkerBackgroundColor: "rgb(156,163,175)",
     });
-    fanSeries.setData(
-      data.q05Prices.map((p) => ({ time: toTime(p.time), value: p.value })),
-    );
+    fanSeries.setData(data.q05Prices.map((p) => ({ time: toTime(p.time), value: p.value })));
     fanSeriesRef.current = fanSeries;
 
     const handleResize = () => {
@@ -183,9 +181,7 @@ function FanChart({ data }: FanChartProps) {
 
     const count = PERIOD_SLICE[period];
     series.setData(
-      data.allHistory
-        .slice(-count)
-        .map((p) => ({ time: toTime(p.time), value: p.value })),
+      data.allHistory.slice(-count).map((p) => ({ time: toTime(p.time), value: p.value })),
     );
     const histSlice = data.historicalQ05
       .slice(-count)
@@ -240,9 +236,7 @@ function FanChart({ data }: FanChartProps) {
               className={`flex items-center gap-1 transition-opacity ${showHistQ05 ? "opacity-100" : "opacity-40"}`}
             >
               <div className="h-0.5 w-3 border-t-2 border-dashed border-indigo-400" />
-              <span className="text-[10px] font-medium text-indigo-400">
-                과거 예측
-              </span>
+              <span className="text-[10px] font-medium text-indigo-400">과거 예측</span>
             </button>
           </div>
         </div>
