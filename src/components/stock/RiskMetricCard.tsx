@@ -31,9 +31,7 @@ function RiskMetricCard({ metric }: RiskMetricCardProps) {
         )}
       </p>
       {metric.helperText ? (
-        <p className={`text-xs font-medium ${helperToneClassName}`}>
-          {metric.helperText}
-        </p>
+        <p className={`text-xs font-medium ${helperToneClassName}`}>{metric.helperText}</p>
       ) : null}
     </Card>
   );

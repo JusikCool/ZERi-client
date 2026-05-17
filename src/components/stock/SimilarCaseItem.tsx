@@ -16,9 +16,7 @@ function SimilarCaseItem({ item, isLast = false }: SimilarCaseItemProps) {
       <div className="flex min-w-0 flex-1 items-center gap-3">
         <StockAvatar symbol={item.symbol} />
         <div className="min-w-0 flex-1">
-          <p className="truncate text-[15px] font-semibold text-slate-900">
-            {item.symbol}
-          </p>
+          <p className="truncate text-[15px] font-semibold text-slate-900">{item.symbol}</p>
           <p className="truncate text-xs font-medium text-slate-400">
             {item.dateLabel} {"\u00B7 \uC608\uCE21"} {item.predictedPercent}%
           </p>

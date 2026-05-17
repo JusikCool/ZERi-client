@@ -8,9 +8,7 @@ type DownsideRangeCardProps = {
 
 function DownsideRangeCard({ range }: DownsideRangeCardProps) {
   const rawPercent =
-    ((range.currentPercent - range.minPercent) /
-      (range.maxPercent - range.minPercent)) *
-    100;
+    ((range.currentPercent - range.minPercent) / (range.maxPercent - range.minPercent)) * 100;
   const markerPercent = Math.max(10, Math.min(90, rawPercent));
   const markerStyle = {
     left: `${markerPercent}%`,

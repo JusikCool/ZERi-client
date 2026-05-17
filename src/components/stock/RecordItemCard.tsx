@@ -50,7 +50,8 @@ function RecordItemCard({ item }: Props) {
         <div className="pl-4 text-center">
           <p className="text-[10px] text-slate-400">30일 예측 수익률</p>
           <p className={`mt-0.5 text-[13px] font-semibold ${outcome.color}`}>
-            {outcome.prefix} {sign}{item.outcomePercent}%
+            {outcome.prefix} {sign}
+            {item.outcomePercent}%
           </p>
         </div>
       </div>

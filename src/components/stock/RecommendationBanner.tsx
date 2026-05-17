@@ -8,15 +8,8 @@ type RecommendationBannerProps = {
   tone?: RecommendationTone;
 };
 
-function RecommendationBanner({
-  label,
-  title,
-  tone = "default",
-}: RecommendationBannerProps) {
-  const toneClassName =
-    tone === "danger"
-      ? "bg-slate-900 text-white"
-      : "bg-slate-800 text-white";
+function RecommendationBanner({ label, title, tone = "default" }: RecommendationBannerProps) {
+  const toneClassName = tone === "danger" ? "bg-slate-900 text-white" : "bg-slate-800 text-white";
 
   return (
     <Card
@@ -28,9 +21,7 @@ function RecommendationBanner({
         </div>
         <div className="space-y-0.5">
           <p className="text-[11px] font-medium text-slate-300">{label}</p>
-          <p className="text-[15px] font-semibold tracking-[-0.02em] text-white">
-            {title}
-          </p>
+          <p className="text-[15px] font-semibold tracking-[-0.02em] text-white">{title}</p>
         </div>
       </div>
     </Card>

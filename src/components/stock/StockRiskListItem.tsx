@@ -30,9 +30,7 @@ function StockRiskListItem({
     >
       <StockIdentity symbol={symbol} name={name} />
       <div className="shrink-0 text-right">
-        <p className={`text-[15px] font-semibold leading-none ${riskTone}`}>
-          {riskPercent}%
-        </p>
+        <p className={`text-[15px] font-semibold leading-none ${riskTone}`}>{riskPercent}%</p>
         <p className="mt-0.5 text-xs text-slate-400">{period}</p>
       </div>
     </li>

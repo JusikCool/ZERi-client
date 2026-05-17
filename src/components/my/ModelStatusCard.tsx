@@ -24,10 +24,7 @@ function ModelStatusCard({ status }: ModelStatusCardProps) {
           <span
             className={`inline-flex shrink-0 items-center rounded-full px-2.5 py-1 text-[10px] font-semibold ${badgeClassNameMap[status.status]}`}
           >
-            <span
-              aria-hidden="true"
-              className="mr-1.5 h-2 w-2 rounded-full bg-emerald-500"
-            />
+            <span aria-hidden="true" className="mr-1.5 h-2 w-2 rounded-full bg-emerald-500" />
             {status.statusLabel}
           </span>
         </div>
@@ -36,9 +33,7 @@ function ModelStatusCard({ status }: ModelStatusCardProps) {
             {descriptionParts.length > 1 ? (
               <>
                 {descriptionParts[0]}
-                <span className="font-medium text-emerald-600">
-                  {status.statusLabel}
-                </span>
+                <span className="font-medium text-emerald-600">{status.statusLabel}</span>
                 {descriptionParts.slice(1).join(status.statusLabel)}
               </>
             ) : (
@@ -46,9 +41,7 @@ function ModelStatusCard({ status }: ModelStatusCardProps) {
             )}
           </p>
           {status.metricsText ? (
-            <p className="text-[11px] leading-[1.4] text-slate-400">
-              {status.metricsText}
-            </p>
+            <p className="text-[11px] leading-[1.4] text-slate-400">{status.metricsText}</p>
           ) : null}
         </div>
       </div>

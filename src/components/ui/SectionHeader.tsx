@@ -15,11 +15,7 @@ function SectionHeader({
 }: SectionHeaderProps) {
   return (
     <div className={`flex items-center justify-between ${className}`.trim()}>
-      <h2
-        className={`text-sm font-semibold text-slate-900 ${titleClassName}`.trim()}
-      >
-        {title}
-      </h2>
+      <h2 className={`text-sm font-semibold text-slate-900 ${titleClassName}`.trim()}>{title}</h2>
       {actionLabel ? (
         <button
           type="button"

@@ -13,7 +13,9 @@ export const mockRiskReasonData: Record<string, RiskReasonData> = {
       { text: "실현 변동성이 평소의 1.8배", highlight: true },
       { text: "로 관측되었고, 14일 RSI는 78로 통계적 과열 구간에 위치합니다. 현재 VIX " },
       { text: "24.3", highlight: true },
-      { text: " 환경에서, 모델은 본 종목의 변동성을 과거 분포 상위 5% 구간으로 분류했습니다. 이는 통계적 관측치이며, 향후 가격 방향에 대한 예측이 아닙니다." },
+      {
+        text: " 환경에서, 모델은 본 종목의 변동성을 과거 분포 상위 5% 구간으로 분류했습니다. 이는 통계적 관측치이며, 향후 가격 방향에 대한 예측이 아닙니다.",
+      },
     ],
     reasons: [
       {

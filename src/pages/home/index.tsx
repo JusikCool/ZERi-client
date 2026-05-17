@@ -9,10 +9,7 @@ function HomePage() {
   return (
     <div className="mx-auto min-h-dvh w-full max-w-107.5 bg-[#f2f4f6] px-4 pt-6 text-slate-900 sm:py-8">
       <header className="flex items-center justify-between px-1 pb-4 pt-1">
-        <a
-          href="/"
-          className="text-[1.375rem] font-bold tracking-[-0.04em] text-blue-500"
-        >
+        <a href="/" className="text-[1.375rem] font-bold tracking-[-0.04em] text-blue-500">
           before.
         </a>
         <button
@@ -34,4 +31,3 @@ function HomePage() {
 }
 
 export default HomePage;
-

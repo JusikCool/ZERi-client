@@ -33,9 +33,7 @@ function piecewisePrices(waypoints: [number, number][], count: number): number[]
     const [loDay, loPrice] = sorted[loIdx];
     const [hiDay, hiPrice] = sorted[hiIdx];
     const base =
-      loDay === hiDay
-        ? loPrice
-        : loPrice + (hiPrice - loPrice) * ((i - loDay) / (hiDay - loDay));
+      loDay === hiDay ? loPrice : loPrice + (hiPrice - loPrice) * ((i - loDay) / (hiDay - loDay));
     const noise = Math.sin(i * 1.7) * 1.5 + Math.cos(i * 3.1) * 0.8;
     return Math.round((base + noise) * 10) / 10;
   });
@@ -43,8 +41,8 @@ function piecewisePrices(waypoints: [number, number][], count: number): number[]
 
 // Last 25 trading days (known daily closes)
 const PLTR_RECENT_25 = [
-  93, 96, 100, 104, 108, 112, 116, 120, 118, 121, 119, 123, 126, 124, 122,
-  119, 117, 115, 112, 110, 113, 111, 109, 108, 107,
+  93, 96, 100, 104, 108, 112, 116, 120, 118, 121, 119, 123, 126, 124, 122, 119, 117, 115, 112, 110,
+  113, 111, 109, 108, 107,
 ];
 
 // 227 trading days before the recent 25 (~May 2025 → early Apr 2026)
@@ -76,18 +74,14 @@ const pltrAllHistory: ChartPoint[] = allTimes252.map((time, i) => ({
 const pltrHistQ05: ChartPoint[] = pltrAllHistory.map((p, i) => ({
   time: p.time,
   value:
-    Math.round(
-      p.value *
-        (0.76 + Math.sin(i * 0.5 + 1) * 0.025 + Math.cos(i * 0.8) * 0.015) *
-        10,
-    ) / 10,
+    Math.round(p.value * (0.76 + Math.sin(i * 0.5 + 1) * 0.025 + Math.cos(i * 0.8) * 0.015) * 10) /
+    10,
 }));
 
 // Q0.05 projection: 31 calendar days from today, starting at last historicalQ05 (~84.8)
 const PLTR_Q05_VALUES = [
-  84.8, 84.8, 84.7, 84.7, 84.7, 84.6, 84.6, 84.6, 84.5, 84.5, 84.4, 84.4,
-  84.3, 84.3, 84.2, 84.2, 84.1, 84.0, 84.0, 83.9, 83.9, 83.8, 83.8, 83.7,
-  83.7, 83.6, 83.6, 83.6, 83.5, 83.5, 83.5,
+  84.8, 84.8, 84.7, 84.7, 84.7, 84.6, 84.6, 84.6, 84.5, 84.5, 84.4, 84.4, 84.3, 84.3, 84.2, 84.2,
+  84.1, 84.0, 84.0, 83.9, 83.9, 83.8, 83.8, 83.7, 83.7, 83.6, 83.6, 83.6, 83.5, 83.5, 83.5,
 ];
 const pltrProjTimes = calendarDayTimestamps("2026-05-07", 31);
 const pltrQ05: ChartPoint[] = pltrProjTimes.map((time, i) => ({

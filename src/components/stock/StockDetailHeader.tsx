@@ -19,9 +19,7 @@ function StockDetailHeader({
       >
         <span aria-hidden="true">&lt;</span>
       </button>
-      <h1 className="text-[17px] font-semibold tracking-[-0.02em] text-slate-900">
-        {title}
-      </h1>
+      <h1 className="text-[17px] font-semibold tracking-[-0.02em] text-slate-900">{title}</h1>
     </header>
   );
 }

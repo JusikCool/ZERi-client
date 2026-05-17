@@ -10,8 +10,7 @@ function StockWhyPage() {
   const { symbol } = useParams<{ symbol: string }>();
 
   const normalizedSymbol = symbol?.toUpperCase() ?? "PLTR";
-  const pageData =
-    mockRiskReasonData[normalizedSymbol] ?? mockRiskReasonData.PLTR;
+  const pageData = mockRiskReasonData[normalizedSymbol] ?? mockRiskReasonData.PLTR;
 
   return (
     <div className="mx-auto min-h-dvh w-full max-w-107.5 bg-[#f2f4f6] px-4 pb-28 pt-5 text-slate-900">

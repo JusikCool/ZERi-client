@@ -16,7 +16,9 @@ function RiskReasonItem({ title, description, severity, percent }: RiskReasonIte
     <Card className="rounded-2xl p-4">
       <div className="flex items-center justify-between gap-2">
         <p className="text-[14px] font-semibold text-slate-900">{title}</p>
-        <p className={`shrink-0 text-[14px] font-bold ${severity === "neutral" ? "text-slate-500" : "text-rose-500"}`}>
+        <p
+          className={`shrink-0 text-[14px] font-bold ${severity === "neutral" ? "text-slate-500" : "text-rose-500"}`}
+        >
           {percent}%
         </p>
       </div>
@@ -25,7 +27,11 @@ function RiskReasonItem({ title, description, severity, percent }: RiskReasonIte
           className={`h-full rounded-full ${barColor}`}
           initial={{ width: 0 }}
           animate={{ width: `${percent}%` }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay: 0.2 }}
+          transition={{
+            duration: 0.8,
+            ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+            delay: 0.2,
+          }}
         />
       </div>
       <p className="text-[13px] leading-[1.55] text-slate-500">{description}</p>

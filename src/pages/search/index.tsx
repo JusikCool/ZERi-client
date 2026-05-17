@@ -10,7 +10,12 @@ type StockSearchItem = {
 };
 
 const STOCK_LIST: StockSearchItem[] = [
-  { symbol: "PLTR", korName: "팔란티어", companyName: "Palantir Technologies", sector: "Technology" },
+  {
+    symbol: "PLTR",
+    korName: "팔란티어",
+    companyName: "Palantir Technologies",
+    sector: "Technology",
+  },
   { symbol: "TSLA", korName: "테슬라", companyName: "Tesla, Inc.", sector: "Automotive" },
   { symbol: "NVDA", korName: "엔비디아", companyName: "NVIDIA Corporation", sector: "Technology" },
   { symbol: "AAPL", korName: "애플", companyName: "Apple Inc.", sector: "Technology" },

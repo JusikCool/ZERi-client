@@ -12,10 +12,7 @@ const valueToneClassNameMap: Record<NonNullable<DashboardStat["tone"]>, string> 
   success: "text-slate-900",
 };
 
-const helperToneClassNameMap: Record<
-  NonNullable<DashboardStat["tone"]>,
-  string
-> = {
+const helperToneClassNameMap: Record<NonNullable<DashboardStat["tone"]>, string> = {
   default: "text-slate-400",
   primary: "text-slate-400",
   danger: "text-slate-400",
@@ -24,17 +21,14 @@ const helperToneClassNameMap: Record<
 
 function DashboardStatCard({ stat }: DashboardStatCardProps) {
   const tone = stat.tone ?? "default";
-  const isInlineUnitStat =
-    stat.id === "reviews" || stat.id === "actual-downside";
+  const isInlineUnitStat = stat.id === "reviews" || stat.id === "actual-downside";
   const isHitRateStat = stat.id === "hit-rate";
 
   return (
     <Card className="rounded-[16px] p-3 shadow-[0_6px_18px_rgba(15,23,42,0.028)]">
       <div className="space-y-1.5">
         <p className="text-[10px] font-semibold leading-none text-slate-500">
-          {isHitRateStat && stat.helperText
-            ? `${stat.label} - ${stat.helperText}`
-            : stat.label}
+          {isHitRateStat && stat.helperText ? `${stat.label} - ${stat.helperText}` : stat.label}
         </p>
         <div className="space-y-1">
           {isInlineUnitStat && stat.helperText ? (
@@ -54,9 +48,7 @@ function DashboardStatCard({ stat }: DashboardStatCardProps) {
             </p>
           )}
           {stat.helperText && !isInlineUnitStat && !isHitRateStat ? (
-            <p
-              className={`text-[10px] font-medium leading-none ${helperToneClassNameMap[tone]}`}
-            >
+            <p className={`text-[10px] font-medium leading-none ${helperToneClassNameMap[tone]}`}>
               {stat.helperText}
             </p>
           ) : null}

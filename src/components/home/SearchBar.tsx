@@ -9,12 +9,7 @@ function SearchBar() {
         className="shrink-0 text-slate-400"
       >
         <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.5" />
-        <path
-          d="M11 11L14 14"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-        />
+        <path d="M11 11L14 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
       <input
         type="text"
