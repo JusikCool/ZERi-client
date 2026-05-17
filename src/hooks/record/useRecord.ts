@@ -59,6 +59,8 @@ export function useRecord() {
   );
 
   useEffect(() => {
+    let cancelled = false;
+
     async function fetchInitial() {
       setLoading(true);
       setError(null);
@@ -67,17 +69,23 @@ export function useRecord() {
 
       try {
         const { items: raw, nextCursor } = await getHistory(20);
+        if (cancelled) return;
         const unique = dedup(raw);
         setItems(unique);
         cursorRef.current = nextCursor;
         setHasMore(nextCursor !== null);
       } catch (err) {
+        if (cancelled) return;
         setError(err instanceof ApiClientError ? err.message : "기록을 불러오지 못했어요.");
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     }
+
     fetchInitial();
+    return () => {
+      cancelled = true;
+    };
   }, [dedup]);
 
   const loadMore = useCallback(async () => {
