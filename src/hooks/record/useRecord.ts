@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { getHistory } from "../../apis/modules/meApi";
 import { ApiClientError } from "../../apis/error";
 import { parseDecimal } from "../../apis/utils";
@@ -28,44 +28,84 @@ function formatPrice(value: number): string {
 export function useRecord() {
   const [items, setItems] = useState<RecordItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [hasMore, setHasMore] = useState(false);
+  const cursorRef = useRef<string | null>(null);
+  const seen = useRef(new Set<string>());
+
+  const dedup = useCallback(
+    (historyItems: Awaited<ReturnType<typeof getHistory>>["items"]): RecordItem[] => {
+      const newItems: RecordItem[] = [];
+      for (const item of historyItems) {
+        const key = `${item.ticker}_${item.queried_at.slice(0, 10)}`;
+        if (seen.current.has(key)) continue;
+        seen.current.add(key);
+        newItems.push({
+          id: String(item.analysis_id),
+          symbol: item.ticker,
+          korName: item.company_name_kr ?? item.ticker,
+          grade: "OK",
+          viewedAt: formatViewedAt(item.queried_at),
+          price: formatPrice(parseDecimal(item.price_at_query) ?? 0),
+          estimatedChangePercent: (parseDecimal(item.worst_case_pct) ?? 0) * 100,
+          outcome: OUTCOME_MAP[item.outcome ?? "pending"] ?? "pending",
+          outcomePercent: (parseDecimal(item.outcome_pct) ?? 0) * 100,
+        });
+      }
+      return newItems;
+    },
+    [],
+  );
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchInitial() {
       setLoading(true);
       setError(null);
+      seen.current.clear();
+      cursorRef.current = null;
+
       try {
-        const historyItems = await getHistory(50);
-
-        const seen = new Set<string>();
-        const deduped = historyItems.filter((item) => {
-          const key = `${item.ticker}_${item.queried_at.slice(0, 10)}`;
-          if (seen.has(key)) return false;
-          seen.add(key);
-          return true;
-        });
-
-        setItems(
-          deduped.map((item) => ({
-            id: String(item.analysis_id),
-            symbol: item.ticker,
-            korName: item.company_name_kr ?? item.ticker,
-            grade: "OK",
-            viewedAt: formatViewedAt(item.queried_at),
-            price: formatPrice(parseDecimal(item.price_at_query) ?? 0),
-            estimatedChangePercent: (parseDecimal(item.worst_case_pct) ?? 0) * 100,
-            outcome: OUTCOME_MAP[item.outcome ?? "pending"] ?? "pending",
-            outcomePercent: (parseDecimal(item.outcome_pct) ?? 0) * 100,
-          })),
-        );
+        const { items: raw, nextCursor } = await getHistory(20);
+        const unique = dedup(raw);
+        setItems(unique);
+        cursorRef.current = nextCursor;
+        setHasMore(nextCursor !== null);
       } catch (err) {
         setError(err instanceof ApiClientError ? err.message : "기록을 불러오지 못했어요.");
       } finally {
         setLoading(false);
       }
     }
-    fetchData();
-  }, []);
+    fetchInitial();
+  }, [dedup]);
 
-  return { items, loading, error };
+  const loadMore = useCallback(async () => {
+    if (!cursorRef.current || loadingMore) return;
+    setLoadingMore(true);
+
+    try {
+      let currentCursor: string | null = cursorRef.current;
+      const accumulated: RecordItem[] = [];
+
+      while (currentCursor && accumulated.length === 0) {
+        const { items: raw, nextCursor } = await getHistory(20, currentCursor);
+        const unique = dedup(raw);
+        accumulated.push(...unique);
+        currentCursor = nextCursor;
+      }
+
+      if (accumulated.length > 0) {
+        setItems((prev) => [...prev, ...accumulated]);
+      }
+      cursorRef.current = currentCursor;
+      setHasMore(currentCursor !== null);
+    } catch {
+      // loadMore 실패 시 조용히 처리 — hasMore 유지
+    } finally {
+      setLoadingMore(false);
+    }
+  }, [dedup, loadingMore]);
+
+  return { items, loading, loadingMore, error, hasMore, loadMore };
 }
