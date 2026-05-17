@@ -13,6 +13,7 @@ const outcomeConfig = {
   down: { prefix: "하락", color: "text-rose-500" },
   up: { prefix: "상승", color: "text-blue-500" },
   flat: { prefix: "보합", color: "text-slate-400" },
+  pending: { prefix: "평가 중", color: "text-slate-400" },
 };
 
 function RecordItemCard({ item }: Props) {
