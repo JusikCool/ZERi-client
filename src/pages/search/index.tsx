@@ -1,32 +1,23 @@
 import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { searchTickers } from "../../apis/modules/tickerApi";
+import { ApiClientError } from "../../apis/error";
+import type { TickerSearchItem } from "../../apis/types";
 
-type StockSearchItem = {
-  symbol: string;
-  korName: string;
-  companyName: string;
-  sector: string;
-};
-
-const STOCK_LIST: StockSearchItem[] = [
-  {
-    symbol: "PLTR",
-    korName: "팔란티어",
-    companyName: "Palantir Technologies",
-    sector: "Technology",
-  },
-  { symbol: "TSLA", korName: "테슬라", companyName: "Tesla, Inc.", sector: "Automotive" },
-  { symbol: "NVDA", korName: "엔비디아", companyName: "NVIDIA Corporation", sector: "Technology" },
-  { symbol: "AAPL", korName: "애플", companyName: "Apple Inc.", sector: "Technology" },
+const AVATAR_COLORS = [
+  "bg-rose-100 text-rose-600",
+  "bg-orange-100 text-orange-600",
+  "bg-sky-100 text-sky-600",
+  "bg-emerald-100 text-emerald-700",
+  "bg-violet-100 text-violet-600",
+  "bg-amber-100 text-amber-700",
 ];
 
-const avatarColors: Record<string, string> = {
-  PLTR: "bg-rose-100 text-rose-600",
-  TSLA: "bg-orange-100 text-orange-600",
-  NVDA: "bg-sky-100 text-sky-600",
-  AAPL: "bg-emerald-100 text-emerald-700",
-};
+function getAvatarClass(ticker: string): string {
+  const idx = ticker.charCodeAt(0) % AVATAR_COLORS.length;
+  return AVATAR_COLORS[idx];
+}
 
 function highlight(text: string, query: string) {
   const lower = text.toLowerCase();
@@ -45,16 +36,32 @@ function highlight(text: string, query: string) {
 function SearchPage() {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
+  const [results, setResults] = useState<TickerSearchItem[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const results = query
-    ? STOCK_LIST.filter(
-        (s) =>
-          s.korName.includes(query) ||
-          s.symbol.toLowerCase().includes(query.toLowerCase()) ||
-          s.companyName.toLowerCase().includes(query.toLowerCase()),
-      )
-    : [];
+  useEffect(() => {
+    if (!query.trim()) return;
+
+    const timer = setTimeout(async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const items = await searchTickers(query.trim());
+        setResults(items);
+      } catch (err) {
+        setError(err instanceof ApiClientError ? err.message : "검색 중 오류가 발생했어요.");
+        setResults([]);
+      } finally {
+        setLoading(false);
+      }
+    }, 350);
+
+    return () => clearTimeout(timer);
+  }, [query]);
+
+  const displayName = (item: TickerSearchItem) => item.company_name_kr ?? item.company_name;
 
   return (
     <div className="mx-auto min-h-dvh w-full max-w-107.5 bg-[#f2f4f6] text-slate-900">
@@ -95,37 +102,56 @@ function SearchPage() {
 
       {query && (
         <main className="px-4 pb-28 pt-3">
-          <p className="mb-3 text-xs text-slate-400">검색 결과 · {results.length}건</p>
-          {results.length > 0 && (
-            <div className="overflow-hidden rounded-2xl bg-white shadow-[0_2px_12px_rgba(15,23,42,0.06)]">
-              {results.map((stock, index) => (
-                <button
-                  key={stock.symbol}
-                  type="button"
-                  onClick={() => navigate(`/stocks/${stock.symbol}`)}
-                  className={`flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors active:bg-slate-50 ${
-                    index < results.length - 1 ? "border-b border-slate-100" : ""
-                  }`}
-                >
-                  <div
-                    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-[14px] text-[11px] font-bold ${
-                      avatarColors[stock.symbol] ?? "bg-slate-100 text-slate-600"
-                    }`}
-                  >
-                    {stock.symbol}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-[15px] font-semibold text-slate-900">
-                      {highlight(stock.korName, query)}
-                    </p>
-                    <p className="mt-0.5 text-xs text-slate-400">
-                      {stock.companyName} · {stock.sector}
-                    </p>
-                  </div>
-                  <ChevronRight size={16} strokeWidth={1.8} className="shrink-0 text-slate-300" />
-                </button>
+          {loading ? (
+            <div className="space-y-2">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="h-16 animate-pulse rounded-2xl bg-slate-200" />
               ))}
             </div>
+          ) : error ? (
+            <div className="rounded-2xl bg-rose-50 px-4 py-3">
+              <p className="text-sm text-rose-500">{error}</p>
+            </div>
+          ) : (
+            <>
+              <p className="mb-3 text-xs text-slate-400">검색 결과 · {results.length}건</p>
+              {results.length > 0 ? (
+                <div className="overflow-hidden rounded-2xl bg-white shadow-[0_2px_12px_rgba(15,23,42,0.06)]">
+                  {results.map((item, index) => (
+                    <button
+                      key={item.ticker}
+                      type="button"
+                      onClick={() => navigate(`/stocks/${item.ticker}`)}
+                      className={`flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors active:bg-slate-50 ${
+                        index < results.length - 1 ? "border-b border-slate-100" : ""
+                      }`}
+                    >
+                      <div
+                        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-[14px] text-[11px] font-bold ${getAvatarClass(item.ticker)}`}
+                      >
+                        {item.ticker}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[15px] font-semibold text-slate-900">
+                          {highlight(displayName(item), query)}
+                        </p>
+                        <p className="mt-0.5 text-xs text-slate-400">
+                          {item.company_name}
+                          {item.sector ? ` · ${item.sector}` : ""}
+                        </p>
+                      </div>
+                      <ChevronRight
+                        size={16}
+                        strokeWidth={1.8}
+                        className="shrink-0 text-slate-300"
+                      />
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-center text-sm text-slate-400">검색 결과가 없어요</p>
+              )}
+            </>
           )}
         </main>
       )}
