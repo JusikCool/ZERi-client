@@ -19,7 +19,7 @@ function HomePage() {
       try {
         const [user, spotlightRes, watchlistItems] = await Promise.all([
           getMe(),
-          getSpotlight("watchlist"),
+          getSpotlight("all"),
           getWatchlist(),
         ]);
 
@@ -96,7 +96,7 @@ function HomePage() {
         <main className="space-y-5 pb-28">
           <HomeGreetingSection />
           {spotlight && <TodayRiskSection risk={spotlight} />}
-          {watchlist.length > 0 && <WatchlistSection items={watchlist} />}
+          <WatchlistSection items={watchlist} />
         </main>
       )}
     </div>
