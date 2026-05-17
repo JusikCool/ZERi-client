@@ -14,6 +14,17 @@ export async function getWatchlist(): Promise<WatchlistItem[]> {
   return res.data.data.items;
 }
 
+export async function addToWatchlist(ticker: string): Promise<WatchlistItem> {
+  const res = await http.post<ApiResponse<{ item: WatchlistItem }>>(ENDPOINTS.me.watchlist, {
+    ticker,
+  });
+  return res.data.data.item;
+}
+
+export async function removeFromWatchlist(ticker: string): Promise<void> {
+  await http.delete(ENDPOINTS.me.watchlistItem(ticker));
+}
+
 export async function getHistoryStats(): Promise<HistoryStats> {
   const res = await http.get<ApiResponse<HistoryStats>>(ENDPOINTS.me.historyStats);
   return res.data.data;
