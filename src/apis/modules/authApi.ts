@@ -1,7 +1,7 @@
-import { clearAllTokens, setAccessToken, setRefreshToken } from "./auth";
-import { ENDPOINTS } from "./endpoints";
-import http from "./http";
-import type { ApiResponse, TokenPair, UserPublic } from "./types";
+import { clearAllTokens, setAccessToken, setRefreshToken } from "../auth";
+import { ENDPOINTS } from "../endpoints";
+import http from "../http";
+import type { ApiResponse, TokenPair, UserPublic } from "../types";
 
 type AuthData = {
   user: UserPublic;

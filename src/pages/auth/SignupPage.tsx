@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signup } from "../../apis/authApi";
+import { signup } from "../../apis/modules/authApi";
 import { ApiClientError } from "../../apis/error";
 
 function SignupPage() {
