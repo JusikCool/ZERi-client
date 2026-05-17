@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signup } from "../../apis/authApi";
-import { parseApiError } from "../../apis/error";
+import { ApiClientError } from "../../apis/error";
 
 function SignupPage() {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ function SignupPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: { preventDefault(): void }) {
     e.preventDefault();
     setError(null);
     setLoading(true);
@@ -19,8 +19,7 @@ function SignupPage() {
       await signup(name, email, password);
       navigate("/", { replace: true });
     } catch (err) {
-      const apiError = parseApiError(err);
-      setError(apiError.message);
+      setError(err instanceof ApiClientError ? err.message : "알 수 없는 오류가 발생했습니다.");
     } finally {
       setLoading(false);
     }
