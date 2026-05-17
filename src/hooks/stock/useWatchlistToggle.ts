@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { addToWatchlist, getWatchlist, removeFromWatchlist } from "../../apis/modules/meApi";
 
 export function useWatchlistToggle(ticker: string) {
@@ -36,11 +37,14 @@ export function useWatchlistToggle(ticker: string) {
     try {
       if (prev) {
         await removeFromWatchlist(ticker);
+        toast.success("관심종목에서 제거했어요");
       } else {
         await addToWatchlist(ticker);
+        toast.success("관심종목에 추가했어요");
       }
     } catch {
       setIsInWatchlist(prev);
+      toast.error("요청에 실패했어요. 다시 시도해주세요");
     } finally {
       setToggling(false);
     }
