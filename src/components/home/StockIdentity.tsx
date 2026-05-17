@@ -1,4 +1,4 @@
-import StockAvatar from "./StockAvatar";
+import StockAvatar from "../stock/StockAvatar";
 
 type StockIdentityProps = {
   symbol: string;

@@ -1,35 +1,8 @@
-import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
+import { ChevronLeft, Search, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SearchResultItem from "../../components/search/SearchResultItem";
 import { useSearch } from "../../hooks/search/useSearch";
-
-const AVATAR_COLORS = [
-  "bg-rose-100 text-rose-600",
-  "bg-orange-100 text-orange-600",
-  "bg-sky-100 text-sky-600",
-  "bg-emerald-100 text-emerald-700",
-  "bg-violet-100 text-violet-600",
-  "bg-amber-100 text-amber-700",
-];
-
-function getAvatarClass(ticker: string): string {
-  const idx = ticker.charCodeAt(0) % AVATAR_COLORS.length;
-  return AVATAR_COLORS[idx];
-}
-
-function highlight(text: string, query: string) {
-  const lower = text.toLowerCase();
-  const q = query.toLowerCase();
-  const idx = lower.indexOf(q);
-  if (idx === -1) return <>{text}</>;
-  return (
-    <>
-      {text.slice(0, idx)}
-      <span className="text-blue-500">{text.slice(idx, idx + query.length)}</span>
-      {text.slice(idx + query.length)}
-    </>
-  );
-}
 
 function SearchPage() {
   const navigate = useNavigate();
@@ -92,34 +65,16 @@ function SearchPage() {
               {results.length > 0 ? (
                 <div className="overflow-hidden rounded-2xl bg-white shadow-[0_2px_12px_rgba(15,23,42,0.06)]">
                   {results.map((item, index) => (
-                    <button
+                    <SearchResultItem
                       key={item.ticker}
-                      type="button"
+                      ticker={item.ticker}
+                      companyName={item.company_name}
+                      companyNameKr={item.company_name_kr}
+                      sector={item.sector}
+                      query={query}
+                      isLast={index === results.length - 1}
                       onClick={() => navigate(`/stocks/${item.ticker}`)}
-                      className={`flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors active:bg-slate-50 ${
-                        index < results.length - 1 ? "border-b border-slate-100" : ""
-                      }`}
-                    >
-                      <div
-                        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-[14px] text-[11px] font-bold ${getAvatarClass(item.ticker)}`}
-                      >
-                        {item.ticker}
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="text-[15px] font-semibold text-slate-900">
-                          {highlight(item.company_name_kr ?? item.company_name, query)}
-                        </p>
-                        <p className="mt-0.5 text-xs text-slate-400">
-                          {item.company_name}
-                          {item.sector ? ` · ${item.sector}` : ""}
-                        </p>
-                      </div>
-                      <ChevronRight
-                        size={16}
-                        strokeWidth={1.8}
-                        className="shrink-0 text-slate-300"
-                      />
-                    </button>
+                    />
                   ))}
                 </div>
               ) : (

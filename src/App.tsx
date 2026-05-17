@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { setUnauthorizedHandler } from "./apis/http";
 import PrivateRoute from "./components/auth/PrivateRoute";
@@ -25,21 +26,35 @@ function App() {
   }, [navigate, clearUser]);
 
   return (
-    <Routes>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/signup" element={<SignupPage />} />
-      <Route element={<PrivateRoute />}>
-        <Route element={<AppLayout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/search" element={<SearchPage />} />
-          <Route path="/record" element={<RecordPage />} />
-          <Route path="/my" element={<MyPage />} />
-          <Route path="/stocks/:symbol" element={<StockDetailPage />} />
-          <Route path="/stocks/:symbol/why" element={<StockWhyPage />} />
+    <>
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 2000,
+          style: {
+            borderRadius: "12px",
+            fontSize: "14px",
+            fontWeight: 500,
+            padding: "10px 16px",
+          },
+        }}
+      />
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route element={<PrivateRoute />}>
+          <Route element={<AppLayout />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/record" element={<RecordPage />} />
+            <Route path="/my" element={<MyPage />} />
+            <Route path="/stocks/:symbol" element={<StockDetailPage />} />
+            <Route path="/stocks/:symbol/why" element={<StockWhyPage />} />
+          </Route>
         </Route>
-      </Route>
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </>
   );
 }
 

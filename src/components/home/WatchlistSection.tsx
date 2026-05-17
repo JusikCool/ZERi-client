@@ -1,5 +1,5 @@
 import type { StockRiskItem } from "../../types/stock";
-import StockRiskList from "../stock/StockRiskList";
+import StockRiskList from "./StockRiskList";
 import SectionHeader from "../ui/SectionHeader";
 
 type WatchlistSectionProps = {

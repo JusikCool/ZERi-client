@@ -24,7 +24,10 @@ export function useHome() {
         setUser(user);
 
         const scope = watchlistItems.length > 0 ? "watchlist" : "all";
-        const spotlightRes = await getSpotlight(scope);
+        let spotlightRes = await getSpotlight(scope);
+        if (scope === "watchlist" && !spotlightRes.spotlight) {
+          spotlightRes = await getSpotlight("all");
+        }
 
         let spotlight: TodayRisk | null = null;
         if (spotlightRes.spotlight) {

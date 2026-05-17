@@ -44,11 +44,10 @@ export function useAuth() {
   }
 
   async function logout(): Promise<void> {
-    const token = getRefreshToken() ?? "";
     try {
-      await apiLogout(token);
-    } catch {
-      // 토큰이 이미 무효여도 로컬 상태는 정리
+      await apiLogout(getRefreshToken() ?? "");
+    } catch (err) {
+      setError(err instanceof ApiClientError ? err.message : "로그아웃 중 오류가 발생했습니다.");
     } finally {
       clearUser();
     }

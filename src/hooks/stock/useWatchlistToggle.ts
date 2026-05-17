@@ -1,0 +1,54 @@
+import { useCallback, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { addToWatchlist, getWatchlist, removeFromWatchlist } from "../../apis/modules/meApi";
+
+export function useWatchlistToggle(ticker: string) {
+  const [isInWatchlist, setIsInWatchlist] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [toggling, setToggling] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function checkWatchlist() {
+      setLoading(true);
+      try {
+        const items = await getWatchlist();
+        if (cancelled) return;
+        setIsInWatchlist(items.some((item) => item.ticker === ticker));
+      } catch {
+        setIsInWatchlist(false);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    checkWatchlist();
+    return () => {
+      cancelled = true;
+    };
+  }, [ticker]);
+
+  const toggle = useCallback(async () => {
+    if (toggling) return;
+    setToggling(true);
+    const prev = isInWatchlist;
+    setIsInWatchlist(!prev);
+    try {
+      if (prev) {
+        await removeFromWatchlist(ticker);
+        toast.success("관심종목에서 제거했어요");
+      } else {
+        await addToWatchlist(ticker);
+        toast.success("관심종목에 추가했어요");
+      }
+    } catch {
+      setIsInWatchlist(prev);
+      toast.error("요청에 실패했어요. 다시 시도해주세요");
+    } finally {
+      setToggling(false);
+    }
+  }, [ticker, isInWatchlist, toggling]);
+
+  return { isInWatchlist, loading, toggling, toggle };
+}
