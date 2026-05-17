@@ -19,6 +19,7 @@ const itemVariants = {
 function MyPage() {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -26,8 +27,8 @@ function MyPage() {
         const user = await getMe();
         setUserName(user.name);
         setEmail(user.email);
-      } catch {
-        // 실패 시 mock 유지
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "사용자 정보를 불러오지 못했어요.");
       }
     }
     fetchData();
@@ -42,6 +43,11 @@ function MyPage() {
       >
         <MyHeader title={`${userName || mockMyData.user.name}님`} email={email} />
       </motion.div>
+      {error && (
+        <div className="mb-3 rounded-2xl bg-rose-50 px-4 py-3">
+          <p className="text-sm text-rose-500">{error}</p>
+        </div>
+      )}
       <motion.main
         className="space-y-3 pb-28"
         initial="hidden"
