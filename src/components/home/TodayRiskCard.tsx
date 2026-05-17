@@ -2,7 +2,7 @@ import { useMotionValue, useTransform, animate, motion } from "framer-motion";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import type { TodayRisk } from "../../types/stock";
-import StockIdentity from "../stock/StockIdentity";
+import StockIdentity from "./StockIdentity";
 import Button from "../ui/Button";
 import Card from "../ui/Card";
 
