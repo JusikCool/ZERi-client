@@ -1,9 +1,9 @@
 type MyHeaderProps = {
-  title?: string;
-  email?: string;
+  title: string;
+  email: string;
 };
 
-function MyHeader({ title = "유진님", email }: MyHeaderProps) {
+function MyHeader({ title, email }: MyHeaderProps) {
   return (
     <header className="flex items-center justify-between px-0.5 pb-4 pt-1">
       <div>

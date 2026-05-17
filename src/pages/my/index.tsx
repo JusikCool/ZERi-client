@@ -40,7 +40,7 @@ function MyPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
       >
-        <MyHeader title={`${userName || mockMyData.user.name}님`} email={email || undefined} />
+        <MyHeader title={`${userName || mockMyData.user.name}님`} email={email} />
       </motion.div>
       <motion.main
         className="space-y-3 pb-28"
